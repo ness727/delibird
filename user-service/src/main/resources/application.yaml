@@ -14,5 +14,5 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka/
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${random.value}
-    lease-renewal-interval-in-seconds: 1  # ?? ??? ?? ??
-    lease-expiration-duration-in-seconds: 2  # ?? ??? ?? ??
+    lease-renewal-interval-in-seconds: 1  # 실제 서비스 시에 제거
+    lease-expiration-duration-in-seconds: 2  # 실제 서비스 시에 제거

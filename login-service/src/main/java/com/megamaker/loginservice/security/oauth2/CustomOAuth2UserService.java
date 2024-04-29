@@ -1,10 +1,11 @@
-package com.megamaker.gatewayservice.security.oauth2;
+package com.megamaker.loginservice.security.oauth2;
 
-import com.megamaker.userservice.Repository.UserRepository;
-import com.megamaker.userservice.domain.User;
-import com.megamaker.userservice.dto.GoogleResponse;
-import com.megamaker.userservice.dto.KakaoResponse;
-import com.megamaker.userservice.dto.NaverResponse;
+
+import com.megamaker.loginservice.dto.RequestCheckUser;
+import com.megamaker.loginservice.dto.RequestRegisterUser;
+import com.megamaker.loginservice.dto.ResponseCheckUser;
+import com.megamaker.loginservice.dto.UserStatus;
+import com.megamaker.loginservice.feignclient.UserClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -12,18 +13,15 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
-    private final UserRepository userRepository;
+    private final UserClient userClient;
 
-    @Transactional
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -36,26 +34,24 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         };
 
         if (response == null) throw new OAuth2AuthenticationException("로그인 실패");
-        Optional<User> foundUser = userRepository.findByProviderId(response.getProviderId());
-        User user;
 
-        // 신규 회원일 때
-        if (foundUser.isEmpty()) {
+        RequestRegisterUser user = null;
+        ResponseCheckUser result = userClient.isUserAlreadyRegistered(new RequestCheckUser(response.getProviderId()));
+
+        if (result.getUserId() != null) {  // 기존 회원일 때
+            user = RequestRegisterUser.builder()
+                    .userId(result.getUserId())
+                    .providerId(result.getProviderId())
+                    .status(result.getStatus())
+                    .build();
+        } else {  // 신규 회원일 때
             String oAuth2UserId = UUID.randomUUID().toString() + "@" + response.getProvider().charAt(0);
-            user = User.builder()
+            user = RequestRegisterUser.builder()
                     .userId(oAuth2UserId)
                     .providerId(response.getProviderId())
-                    // .nickname()
-                    // .phone()
-                    // .address()
-                    .status(User.Status.USER)
+                    .status(UserStatus.USER)
                     .build();
-            userRepository.save(user);
-        } 
-        // 기존 회원일 때
-        else {
-            user = foundUser.get();
-            // user.setUserName(response.getName());
+            userClient.register(user);
         }
 
         return new CustomOAuth2User(response, user);

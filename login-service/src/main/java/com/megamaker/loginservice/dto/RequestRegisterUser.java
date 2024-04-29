@@ -1,8 +1,9 @@
-package com.megamaker.userservice.dto;
+package com.megamaker.loginservice.dto;
 
-import com.megamaker.userservice.domain.User;
-import com.megamaker.userservice.domain.UserStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor

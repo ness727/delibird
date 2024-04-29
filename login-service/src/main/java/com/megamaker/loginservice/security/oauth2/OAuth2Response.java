@@ -1,4 +1,4 @@
-package com.megamaker.gatewayservice.security.oauth2;
+package com.megamaker.loginservice.security.oauth2;
 
 public interface OAuth2Response {
     String getProvider();  // 제공자 이름 e.g. naver

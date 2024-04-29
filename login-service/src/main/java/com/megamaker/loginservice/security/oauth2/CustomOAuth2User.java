@@ -1,6 +1,6 @@
-package com.megamaker.gatewayservice.security.oauth2;
+package com.megamaker.loginservice.security.oauth2;
 
-import com.megamaker.userservice.domain.User;
+import com.megamaker.loginservice.dto.RequestRegisterUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +13,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
     private final OAuth2Response oAuth2Response;
-    private final User user;
+    private final RequestRegisterUser user;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -30,7 +30,11 @@ public class CustomOAuth2User implements OAuth2User {
         return oAuth2Response.getName();
     }
 
-    public String getId() {
+    public String getUserId() {
+        return user.getUserId();
+    }
+
+    public String getProviderId() {
         return oAuth2Response.getProviderId();
     }
 }

@@ -1,7 +1,7 @@
-package com.megamaker.gatewayservice.security;
+package com.megamaker.loginservice.security;
 
-import com.megamaker.userservice.security.filter.AfterLoginFilter;
-import com.megamaker.userservice.security.oauth2.CustomOAuth2UserService;
+import com.megamaker.loginservice.security.filter.AfterLoginFilter;
+import com.megamaker.loginservice.security.oauth2.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -64,6 +62,7 @@ public class WebSecurityConfig {
                         )
                         .loginPage("/login")  // 커스텀 로그인 페이지 설정
                         .defaultSuccessUrl("/", true)
+                        .successHandler(loginSuccessHandler())
                 )
 
                 // 어느 경로를 인증받지 않고 사용할 수 있는지 설정
@@ -84,8 +83,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
     }
 
 //    @Bean

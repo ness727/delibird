@@ -26,9 +26,6 @@ public class User extends BaseDateTimeEntity {
     private String address;
 
     @Enumerated(value = EnumType.ORDINAL)
-    private Status status;
+    private UserStatus status;
 
-    public enum Status {
-        ADMIN, MANAGER, USER
-    }
 }

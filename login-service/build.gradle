@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4'
+    id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -27,33 +27,21 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-    // eureka client
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-    // Thymeleaf
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
-    // Data JPA
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    // MariaDB
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-
-    // 테스트용 h2
-    testImplementation 'com.h2database:h2'
-
-    // MapStruct
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-
-    // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
-    testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {

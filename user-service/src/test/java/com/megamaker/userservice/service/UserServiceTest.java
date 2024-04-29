@@ -2,13 +2,17 @@ package com.megamaker.userservice.service;
 
 import com.megamaker.userservice.Repository.UserRepository;
 import com.megamaker.userservice.domain.User;
+import com.megamaker.userservice.domain.UserStatus;
 import com.megamaker.userservice.dto.RequestRegisterUser;
+import com.megamaker.userservice.dto.ResponseCheckUser;
 import com.megamaker.userservice.dto.ResponseRegisterUser;
 import com.megamaker.userservice.dto.ResponseUser;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 class UserServiceTest {
@@ -27,7 +31,7 @@ class UserServiceTest {
         RequestRegisterUser requestRegisterUser = RequestRegisterUser.builder()
                 .userId("test@test.com")
                 .providerId("n12345678")
-                .status(User.Status.USER)
+                .status(UserStatus.USER)
                 .build();
 
         // when
@@ -35,7 +39,41 @@ class UserServiceTest {
         ResponseUser foundUser = userService.getUser(requestRegisterUser.getUserId());
 
         // then
-        Assertions.assertThat(result.getUserId()).isEqualTo(requestRegisterUser.getUserId());
-        Assertions.assertThat(foundUser.getUserId()).isEqualTo(requestRegisterUser.getUserId());
+        assertThat(result.getUserId()).isEqualTo(requestRegisterUser.getUserId());
+        assertThat(foundUser.getUserId()).isEqualTo(requestRegisterUser.getUserId());
+    }
+
+    @Test
+    public void 유저가_가입되어있지_않으면_각_멤버변수가_null을_반환한다() {
+        // given
+        RequestRegisterUser requestRegisterUser = RequestRegisterUser.builder()
+                .providerId("n12345678")
+                .build();
+
+        // when
+        ResponseCheckUser result = userService.isUserAlreadyRegistered(requestRegisterUser.getProviderId());
+
+        // then
+        assertThat(result.getProviderId()).isNull();
+    }
+
+    @Test
+    public void 유저가_이미_가입되어있으면_true를_반환한다() {
+        // given
+        RequestRegisterUser requestRegisterUser = RequestRegisterUser.builder()
+                .providerId("n12345678")
+                .build();
+
+        // when
+        userService.register(requestRegisterUser);
+        ResponseCheckUser result = userService.isUserAlreadyRegistered(requestRegisterUser.getProviderId());
+
+        // then
+        assertThat(result.getProviderId()).isEqualTo(requestRegisterUser.getUserId());
+    }
+
+    @Test
+    public void 입력값이_제대로_주어지지_않으면_400_응답이_발생한다() {
+
     }
 }

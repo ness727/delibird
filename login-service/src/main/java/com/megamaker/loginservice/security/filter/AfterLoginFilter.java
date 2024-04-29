@@ -1,4 +1,4 @@
-package com.megamaker.gatewayservice.security.filter;
+package com.megamaker.loginservice.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

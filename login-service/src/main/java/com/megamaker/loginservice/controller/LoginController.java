@@ -1,4 +1,4 @@
-package com.megamaker.gatewayservice.controller;
+package com.megamaker.loginservice.controller;
 
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;

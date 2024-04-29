@@ -3,6 +3,7 @@ package com.megamaker.userservice.service;
 import com.megamaker.userservice.Repository.UserRepository;
 import com.megamaker.userservice.domain.User;
 import com.megamaker.userservice.dto.RequestRegisterUser;
+import com.megamaker.userservice.dto.ResponseCheckUser;
 import com.megamaker.userservice.dto.ResponseRegisterUser;
 import com.megamaker.userservice.dto.ResponseUser;
 import com.megamaker.userservice.util.UserMapper;
@@ -21,7 +22,7 @@ public class UserService {
 
     public ResponseRegisterUser register(RequestRegisterUser user) {
         User userEntity = UserMapper.INSTANCE.requestRegisterUserToUser(user);
-        User savedUser = userRepository.save(userEntity);
+        userRepository.save(userEntity);
         return UserMapper.INSTANCE.requestRegisterUserToResponseUser(user);
     }
 
@@ -30,7 +31,8 @@ public class UserService {
         return UserMapper.INSTANCE.userToResponseUser(foundUser);
     }
 
-    public boolean isUserAlreadyRegistered(String providerId) {
-        return userRepository.findByProviderId(providerId).isPresent();
+    public ResponseCheckUser isUserAlreadyRegistered(String providerId) {
+        User foundUser = userRepository.findByProviderId(providerId).orElse(new User());
+        return UserMapper.INSTANCE.userToResponseCheckUser(foundUser);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
 import java.util.Base64;
 
 @Slf4j
@@ -77,7 +79,12 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(httpStatus);
+        //response.setStatusCode(httpStatus);
+
+        // 리다이렉트 할 URL 설정
+        response.getHeaders().setLocation(URI.create("http://localhost:8000/login"));
+        // 리다이렉션 상태 코드 설정
+        response.setStatusCode(HttpStatus.FOUND);
 
         log.error(err);
         return response.setComplete();

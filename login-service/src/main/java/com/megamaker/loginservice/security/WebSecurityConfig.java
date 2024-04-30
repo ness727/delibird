@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -26,7 +29,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return web -> web.ignoring()
-                .requestMatchers("/img/**", "/css/**", "/js/**", "/assets/**");  // 정적 자원은 필터 무시
+                .requestMatchers("/img/**", "/css/**", "/js/**", "/assets/**", "/error");  // 정적 자원은 필터 무시
     }
 
     // 특정 Http 요청에 대한 보안 설정
@@ -83,8 +86,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler();
+    public AuthenticationSuccessHandler loginSuccessHandler() {
+        return new SavedRequestAwareAuthenticationSuccessHandler();
     }
 
 //    @Bean

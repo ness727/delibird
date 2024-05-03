@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -20,6 +22,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URI;
 import java.util.Base64;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -36,18 +39,18 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
+            MultiValueMap<String, HttpCookie> cookies = request.getCookies();
+            if (cookies.containsKey("Auth")) {
+                String jwt = cookies.getFirst("Auth").getValue();
 
-            if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                return onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED);
-            }
-
-            String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-            String jwt = authorizationHeader.replace("Bearer ", "");
-
-            if (!isJwtValid(jwt)) {
+                if (!isJwtValid(jwt)) {
+                    log.debug("토큰이 유효하지 않음");
+                    return onError(exchange, "Token is not valid", HttpStatus.UNAUTHORIZED);
+                }
+            } else {
+                log.debug("쿠키 없음");
                 return onError(exchange, "Token is not valid", HttpStatus.UNAUTHORIZED);
             }
-
             return chain.filter(exchange);
         };
     }
@@ -79,14 +82,11 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
-        //response.setStatusCode(httpStatus);
 
-        // 리다이렉트 할 URL 설정
         response.getHeaders().setLocation(URI.create("http://localhost:8000/login"));
-        // 리다이렉션 상태 코드 설정
         response.setStatusCode(HttpStatus.FOUND);
 
-        log.error(err);
+        log.debug(err);
         return response.setComplete();
     }
 

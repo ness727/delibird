@@ -1,7 +1,6 @@
 package com.megamaker.userservice.dto;
 
-import com.megamaker.userservice.domain.User;
-import com.megamaker.userservice.domain.UserStatus;
+import com.megamaker.userservice.vo.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

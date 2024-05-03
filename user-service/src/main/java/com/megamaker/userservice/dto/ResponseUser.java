@@ -1,8 +1,6 @@
 package com.megamaker.userservice.dto;
 
-import com.megamaker.userservice.domain.User;
-import com.megamaker.userservice.domain.UserStatus;
-import jakarta.persistence.Column;
+import com.megamaker.userservice.vo.UserStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;

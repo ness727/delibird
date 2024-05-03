@@ -1,8 +1,9 @@
 package com.megamaker.userservice.dto;
 
-import com.megamaker.userservice.domain.User;
-import com.megamaker.userservice.domain.UserStatus;
+import com.megamaker.userservice.vo.Provider;
+import com.megamaker.userservice.vo.UserStatus;
 import lombok.*;
+
 
 @Builder
 @AllArgsConstructor
@@ -10,6 +11,7 @@ import lombok.*;
 @Getter
 public class RequestRegisterUser {
     private String userId;
+    private Provider provider;
     private String providerId;
     private UserStatus status;
 }

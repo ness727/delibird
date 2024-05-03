@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @FeignClient("user-service")
 public interface UserClient {
-    //@Headers("Content-Type: application/json")
     @PostMapping("/users/check")
     ResponseCheckUser isUserAlreadyRegistered(RequestCheckUser requestCheckUser);
 

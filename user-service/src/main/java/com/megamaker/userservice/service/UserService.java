@@ -22,8 +22,8 @@ public class UserService {
 
     public ResponseRegisterUser register(RequestRegisterUser user) {
         User userEntity = UserMapper.INSTANCE.requestRegisterUserToUser(user);
-        userRepository.save(userEntity);
-        return UserMapper.INSTANCE.requestRegisterUserToResponseUser(user);
+        User result = userRepository.save(userEntity);
+        return UserMapper.INSTANCE.userToResponseRegisterUser(result);
     }
 
     public ResponseUser getUser(String userId) {

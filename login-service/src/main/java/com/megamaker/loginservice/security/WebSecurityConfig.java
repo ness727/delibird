@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
@@ -22,9 +23,9 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
-    //private final CustomJwtFilter customJwtFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomCorsConfig customCorsConfig;
+    private final LoginSuccessHandler loginSuccessHandler;
 
     @Bean
     public WebSecurityCustomizer configure() {
@@ -54,9 +55,9 @@ public class WebSecurityConfig {
                 .formLogin(FormLoginConfigurer::disable)
 
                 // 세션 비활성화
-//                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
 
                 // OAuth2 클라이언트 설정
                 .oauth2Login(authConfig -> authConfig
@@ -64,8 +65,8 @@ public class WebSecurityConfig {
                                 .userService(customOAuth2UserService)
                         )
                         .loginPage("/login")  // 커스텀 로그인 페이지 설정
-                        .defaultSuccessUrl("/", true)
-                        .successHandler(loginSuccessHandler())
+                        //.defaultSuccessUrl("/", true)
+                        .successHandler(loginSuccessHandler)
                 )
 
                 // 어느 경로를 인증받지 않고 사용할 수 있는지 설정
@@ -84,14 +85,4 @@ public class WebSecurityConfig {
     public AfterLoginFilter afterLoginFilter() {
         return new AfterLoginFilter();
     }
-
-    @Bean
-    public AuthenticationSuccessHandler loginSuccessHandler() {
-        return new SavedRequestAwareAuthenticationSuccessHandler();
-    }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 }

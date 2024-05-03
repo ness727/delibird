@@ -4,7 +4,8 @@ package com.megamaker.loginservice.security.oauth2;
 import com.megamaker.loginservice.dto.RequestCheckUser;
 import com.megamaker.loginservice.dto.RequestRegisterUser;
 import com.megamaker.loginservice.dto.ResponseCheckUser;
-import com.megamaker.loginservice.dto.UserStatus;
+import com.megamaker.loginservice.vo.Provider;
+import com.megamaker.loginservice.vo.UserStatus;
 import com.megamaker.loginservice.feignclient.UserClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +46,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .status(result.getStatus())
                     .build();
         } else {  // 신규 회원일 때
-            String oAuth2UserId = UUID.randomUUID().toString() + "@" + response.getProvider().charAt(0);
+            String oAuth2UserId = UUID.randomUUID().toString();
+            Provider provider = Provider.NONE;
+
+            if (response.getProvider().contains("naver")) {
+                provider = Provider.NAVER;
+            } else if (response.getProvider().contains("kakao")) {
+                provider = Provider.KAKAO;
+            } else if (response.getProvider().contains("google")) {
+                provider = Provider.GOOGLE;
+            }
+
             user = RequestRegisterUser.builder()
                     .userId(oAuth2UserId)
+                    .provider(provider)
                     .providerId(response.getProviderId())
                     .status(UserStatus.USER)
                     .build();

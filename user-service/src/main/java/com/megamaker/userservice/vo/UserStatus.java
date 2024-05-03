@@ -1,4 +1,4 @@
-package com.megamaker.loginservice.dto;
+package com.megamaker.userservice.vo;
 
 public enum UserStatus {
     ADMIN, MANAGER, USER

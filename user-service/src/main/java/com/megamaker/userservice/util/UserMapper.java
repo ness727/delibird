@@ -18,4 +18,6 @@ public interface UserMapper {
     ResponseUser userToResponseUser(User user);
 
     ResponseCheckUser userToResponseCheckUser(User user);
+
+    ResponseRegisterUser userToResponseRegisterUser(User user);
 }

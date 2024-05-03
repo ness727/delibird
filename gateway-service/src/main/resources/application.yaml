@@ -16,6 +16,10 @@ spring:
   application:
     name: gateway-service
 
+  config:
+    import:
+      - classpath:secrets.yaml
+
   cloud:
 #    config:
 #      name: ecommerce
@@ -23,12 +27,12 @@ spring:
     #      profile: dev
 
     gateway:
-      default-filters:
-        - name: GlobalFilter
-          args:
-            baseMessage: Spring Cloud Gateway Global Filter
-            preLogger: true
-            postLogger: true
+#      default-filters:
+#        - name: GlobalFilter
+#          args:
+#            baseMessage: Spring Cloud Gateway Global Filter
+#            preLogger: true
+#            postLogger: true
       routes:
         # Login-Service
         - id: login-service
@@ -44,7 +48,7 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users
-            - Method=GET
+            - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - AuthorizationHeaderFilter
@@ -73,7 +77,7 @@ spring:
             - Path=/user-service/**
             - Method=GET
           filters:
-            - RemoveRequestHeader=Cookie
+          # - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
 
@@ -99,4 +103,4 @@ management:
         include: refresh, health, beans, httpexchanges, busrefresh
 logging:
   level:
-    com.megamaker.gatewayservice.feignclient: debug
+    com.megamaker.gatewayservice: debug

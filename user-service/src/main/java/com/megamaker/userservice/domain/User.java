@@ -1,5 +1,7 @@
 package com.megamaker.userservice.domain;
 
+import com.megamaker.userservice.vo.Provider;
+import com.megamaker.userservice.vo.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +17,9 @@ public class User extends BaseDateTimeEntity {
     private Long id;
 
     private String userId;
+
+    @Enumerated(value = EnumType.ORDINAL)
+    private Provider provider;
 
     @Column(name = "provider_id")
     private String providerId;

@@ -1,5 +1,6 @@
 package com.megamaker.loginservice.dto;
 
+import com.megamaker.loginservice.vo.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class LoginController {
     @GetMapping("/login")
-    public String login(OAuth2AuthenticationToken token) {  // 익명 사용자는 자동 주입 처리 안 되는 것 주의!
+    public String login() {
         return "login";
     }
 

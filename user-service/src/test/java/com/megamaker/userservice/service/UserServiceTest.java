@@ -1,19 +1,20 @@
 package com.megamaker.userservice.service;
 
 import com.megamaker.userservice.Repository.UserRepository;
-import com.megamaker.userservice.domain.User;
-import com.megamaker.userservice.domain.UserStatus;
+import com.megamaker.userservice.vo.Provider;
+import com.megamaker.userservice.vo.UserStatus;
 import com.megamaker.userservice.dto.RequestRegisterUser;
 import com.megamaker.userservice.dto.ResponseCheckUser;
 import com.megamaker.userservice.dto.ResponseRegisterUser;
 import com.megamaker.userservice.dto.ResponseUser;
-import org.assertj.core.api.Assertions;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.*;
 
+@Slf4j
 @DataJpaTest
 class UserServiceTest {
     private final UserService userService;
@@ -29,13 +30,15 @@ class UserServiceTest {
     public void 저장이_성공적으로_완료된다() {
         // given
         RequestRegisterUser requestRegisterUser = RequestRegisterUser.builder()
-                .userId("test@test.com")
+                .userId("test1234")
+                .provider(Provider.NONE)
                 .providerId("n12345678")
                 .status(UserStatus.USER)
                 .build();
 
         // when
         ResponseRegisterUser result = userService.register(requestRegisterUser);
+        log.debug(result.toString());
         ResponseUser foundUser = userService.getUser(requestRegisterUser.getUserId());
 
         // then
@@ -58,7 +61,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void 유저가_이미_가입되어있으면_true를_반환한다() {
+    public void 유저가_이미_가입되어있으면_통과한다() {
         // given
         RequestRegisterUser requestRegisterUser = RequestRegisterUser.builder()
                 .providerId("n12345678")
@@ -69,7 +72,7 @@ class UserServiceTest {
         ResponseCheckUser result = userService.isUserAlreadyRegistered(requestRegisterUser.getProviderId());
 
         // then
-        assertThat(result.getProviderId()).isEqualTo(requestRegisterUser.getUserId());
+        assertThat(result.getProviderId()).isEqualTo(requestRegisterUser.getProviderId());
     }
 
     @Test

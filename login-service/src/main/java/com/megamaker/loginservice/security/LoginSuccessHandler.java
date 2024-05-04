@@ -46,7 +46,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
         Cookie cookie = getCookie("Auth", token);
         response.addCookie(cookie);
-        response.sendRedirect("http://localhost:8000/users/good");
+        response.sendRedirect("http://localhost:8000/");
         //response.addHeader("token", token);
         //response.addHeader("userId", userDto.getUserId());
     }

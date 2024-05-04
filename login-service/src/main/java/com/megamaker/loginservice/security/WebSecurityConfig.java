@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -41,12 +42,11 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 // CORS 허용 커스텀 설정
-                .cors(c -> c
-                        .configurationSource(customCorsConfig)
-                )
-
-                //.addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(afterLoginFilter(), OAuth2LoginAuthenticationFilter.class)
+//                .cors(c -> c
+//                        .configurationSource(customCorsConfig)
+//                )
+                .cors(AbstractHttpConfigurer::disable)
+                //.addFilterBefore(afterLoginFilter(), OAuth2LoginAuthenticationFilter.class)
 
                 // httpBasic 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -72,7 +72,7 @@ public class WebSecurityConfig {
                 // 어느 경로를 인증받지 않고 사용할 수 있는지 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(antMatcher("/login/**"), antMatcher("/oauth2/**"), antMatcher("/signup")
-                                , antMatcher("/users"), antMatcher("/users/id-check"))
+                                , antMatcher("/logout"))
                         .permitAll()
                         .anyRequest()
                         .authenticated()

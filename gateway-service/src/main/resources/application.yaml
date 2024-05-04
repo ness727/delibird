@@ -38,10 +38,18 @@ spring:
         - id: login-service
           uri: lb://LOGIN-SERVICE
           predicates:
-            - Path=/login, /oauth2/**, /logout
+            - Path=/login, /oauth2/**
             - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
+
+        - id: login-service
+          uri: lb://LOGIN-SERVICE
+          predicates:
+            - Path=/logout
+            - Method=POST
+          filters:
+            - AuthorizationHeaderFilter
 
         # User-Service
         - id: user-service
@@ -50,7 +58,14 @@ spring:
             - Path=/users
             - Method=POST
           filters:
-            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/
+            - Method=GET
+          filters:
             - AuthorizationHeaderFilter
 
         - id: user-service
@@ -58,9 +73,6 @@ spring:
           predicates:
             - Path=/users/check
             - Method=POST
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: user-service
           uri: lb://USER-SERVICE
@@ -80,18 +92,6 @@ spring:
           # - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
-
-        # Catalog-Service
-        - id: catalog-service
-          uri: lb://CATALOG-SERVICE
-          predicates:
-            - Path=/catalog-service/**
-
-        # Order-Service
-        - id: order-service
-          uri: lb://ORDER-SERVICE
-          predicates:
-            - Path=/order-service/**
 
 #token:
 #  secret: test12341234@test1234567890.com

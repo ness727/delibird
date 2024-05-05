@@ -41,7 +41,7 @@ spring:
             - Path=/login, /oauth2/**
             - Method=GET
           filters:
-            - RemoveRequestHeader=Cookie
+            - BeforeLoginFilter
 
         - id: login-service
           uri: lb://LOGIN-SERVICE
@@ -49,7 +49,7 @@ spring:
             - Path=/logout
             - Method=POST
           filters:
-            - AuthorizationHeaderFilter
+            - AuthorizationCookieFilter
 
         # User-Service
         - id: user-service
@@ -58,7 +58,7 @@ spring:
             - Path=/users
             - Method=POST
           filters:
-            - AuthorizationHeaderFilter
+            - AuthorizationCookieFilter
 
         - id: user-service
           uri: lb://USER-SERVICE
@@ -66,7 +66,7 @@ spring:
             - Path=/
             - Method=GET
           filters:
-            - AuthorizationHeaderFilter
+            - AuthorizationCookieFilter
 
         - id: user-service
           uri: lb://USER-SERVICE
@@ -91,7 +91,7 @@ spring:
           filters:
           # - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
+            - AuthorizationCookieFilter
 
 #token:
 #  secret: test12341234@test1234567890.com

@@ -16,4 +16,5 @@ public class RequestRegisterUser {
     private Provider provider;
     private String providerId;
     private UserStatus status;
+    private String accessToken;
 }

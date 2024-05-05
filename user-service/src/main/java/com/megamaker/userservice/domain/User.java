@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "users")
 @Entity
-public class User extends BaseDateTimeEntity {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,5 +32,8 @@ public class User extends BaseDateTimeEntity {
 
     @Enumerated(value = EnumType.ORDINAL)
     private UserStatus status;
+
+    @Column(name = "access_token")
+    private String accessToken;
 
 }

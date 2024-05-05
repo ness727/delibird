@@ -1,6 +1,5 @@
 package com.megamaker.loginservice.security;
 
-import com.megamaker.loginservice.security.filter.AfterLoginFilter;
 import com.megamaker.loginservice.security.oauth2.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -42,11 +41,9 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 // CORS 허용 커스텀 설정
-//                .cors(c -> c
-//                        .configurationSource(customCorsConfig)
-//                )
-                .cors(AbstractHttpConfigurer::disable)
-                //.addFilterBefore(afterLoginFilter(), OAuth2LoginAuthenticationFilter.class)
+                .cors(c -> c
+                        .configurationSource(customCorsConfig)
+                )
 
                 // httpBasic 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -69,6 +66,9 @@ public class WebSecurityConfig {
                         .successHandler(loginSuccessHandler)
                 )
 
+                // 자체 로그아웃 구현을 위한 비활성화
+                .logout(AbstractHttpConfigurer::disable)
+
                 // 어느 경로를 인증받지 않고 사용할 수 있는지 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(antMatcher("/login/**"), antMatcher("/oauth2/**"), antMatcher("/signup")
@@ -79,10 +79,5 @@ public class WebSecurityConfig {
                 )
 
                 .build();
-    }
-
-    @Bean
-    public AfterLoginFilter afterLoginFilter() {
-        return new AfterLoginFilter();
     }
 }

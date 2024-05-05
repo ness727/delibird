@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -43,6 +42,7 @@ public class UserController {
     // 가입 확인
     @PostMapping("/check")
     public ResponseEntity<ResponseCheckUser> isUserAlreadyRegistered(@RequestBody RequestCheckUser userProviderId) {
+        log.info("check");
         try {
             ResponseCheckUser responseCheckUser = userService.isUserAlreadyRegistered(userProviderId.getProviderId());
             return ResponseEntity.ok(responseCheckUser);

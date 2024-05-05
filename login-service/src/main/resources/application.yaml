@@ -6,6 +6,12 @@ spring:
     import:
       - classpath:secrets.yaml
 
+  # Redis 설정
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
   security: # OAuth2 설정
     oauth2:
       client:
@@ -44,7 +50,7 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
-
+# Service Discovery 설정
 eureka:
   client:
     register-with-eureka: true
@@ -55,3 +61,11 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${random.value}
     lease-renewal-interval-in-seconds: 1  # 실제 서비스 시에 제거
     lease-expiration-duration-in-seconds: 2  # 실제 서비스 시에 제거
+
+
+
+
+oauth2:
+  logout:
+    uri:
+      naver: https://nid.naver.com/oauth2.0/token

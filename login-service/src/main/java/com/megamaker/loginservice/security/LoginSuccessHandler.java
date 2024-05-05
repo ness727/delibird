@@ -1,6 +1,7 @@
 package com.megamaker.loginservice.security;
 
 import com.megamaker.loginservice.security.oauth2.CustomOAuth2User;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.security.Key;
@@ -47,8 +49,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         Cookie cookie = getCookie("Auth", token);
         response.addCookie(cookie);
         response.sendRedirect("http://localhost:8000/");
-        //response.addHeader("token", token);
-        //response.addHeader("userId", userDto.getUserId());
     }
 
     private static Cookie getCookie(String name, String token) {

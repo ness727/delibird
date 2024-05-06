@@ -21,18 +21,18 @@ public class UserService {
     private final UserRepository userRepository;
 
     public ResponseRegisterUser register(RequestRegisterUser user) {
-        User userEntity = UserMapper.INSTANCE.requestRegisterUserToUser(user);
+        User userEntity = UserMapper.INSTANCE.toUser(user);
         User result = userRepository.save(userEntity);
-        return UserMapper.INSTANCE.userToResponseRegisterUser(result);
+        return UserMapper.INSTANCE.toResponseRegisterUser(result);
     }
 
     public ResponseUser getUser(String userId) {
         User foundUser = userRepository.findByUserId(userId).orElseThrow();
-        return UserMapper.INSTANCE.userToResponseUser(foundUser);
+        return UserMapper.INSTANCE.toResponseUser(foundUser);
     }
 
     public ResponseCheckUser isUserAlreadyRegistered(String providerId) {
         User foundUser = userRepository.findByProviderId(providerId).orElse(new User());
-        return UserMapper.INSTANCE.userToResponseCheckUser(foundUser);
+        return UserMapper.INSTANCE.toResponseCheckUser(foundUser);
     }
 }

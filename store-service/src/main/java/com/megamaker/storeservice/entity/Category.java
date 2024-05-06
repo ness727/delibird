@@ -3,6 +3,8 @@ package com.megamaker.storeservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,4 +18,7 @@ public class Category {
 
     private String name;
     private String image;
+
+    @OneToMany(mappedBy = "category")
+    List<Store> storeList;
 }

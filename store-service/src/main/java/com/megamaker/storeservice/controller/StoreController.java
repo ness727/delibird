@@ -19,8 +19,8 @@ public class StoreController {
 
     // 카테고리로 매장 검색, 쿼리 파라미터에 page, size, sort 포함
     @GetMapping
-    public Slice<ResponseStore> getStoresByCategory(@RequestParam("region_2") String region2,
-                                                                    @RequestParam int categoryId, Pageable pageable) {
-        return storeService.getStoresByCategory(region2, categoryId, pageable);
+    public Slice<ResponseStore> getStoresByCategory(@RequestParam("region_code") String regionCode,
+                                                                    @RequestParam Integer categoryId, Pageable pageable) {
+        return storeService.getStoresByCategory(regionCode, categoryId, pageable);
     }
 }

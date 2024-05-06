@@ -6,5 +6,5 @@ import org.springframework.data.domain.Slice;
 
 
 public interface StoreService {
-    Slice<ResponseStore> getStoresByCategory(String region2, int categoryId, Pageable pageable);
+    Slice<ResponseStore> getStoresByCategory(String regionCode, Integer categoryId, Pageable pageable);
 }

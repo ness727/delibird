@@ -13,22 +13,19 @@ public class Store {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "category_id")
-    private int categoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     private String name;
 
-    @Column(name = "region_1")
-    private String region1;  // 시도
+    @Column(name = "region_code")
+    private String regionCode;  // 법정동 코드
 
-    @Column(name = "region_2")
-    private String region2;  // 구
+    private String address;  // 구 주소
 
-    @Column(name = "region_3")
-    private String region3;  // 동
-
-    @Column(name = "region_4")
-    private String region4;  // 상세 주소
+    @Column(name = "road_address")
+    private String roadAddress;  // 도로명 주소
 
     private String image;
     private String tel;

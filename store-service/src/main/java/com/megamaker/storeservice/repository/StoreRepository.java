@@ -6,5 +6,5 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
-    Slice<Store> findByRegion2AndCategoryId(String region2, int categoryId, Pageable pageable);
+    Slice<Store> findByRegionCodeAndCategoryId(String regionCode, Integer categoryId, Pageable pageable);
 }

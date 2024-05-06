@@ -15,8 +15,8 @@ public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
 
     @Override
-    public Slice<ResponseStore> getStoresByCategory(String region2, int categoryId, Pageable pageable) {
-        Slice<Store> foundStores = storeRepository.findByRegion2AndCategoryId(region2, categoryId, pageable);
+    public Slice<ResponseStore> getStoresByCategory(String regionCode, Integer categoryId, Pageable pageable) {
+        Slice<Store> foundStores = storeRepository.findByRegionCodeAndCategoryId(regionCode, categoryId, pageable);
         return foundStores.map(StoreMapper.INSTANCE::toResponseStore);
     }
 }

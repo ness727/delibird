@@ -28,7 +28,13 @@ public class User {
 
     private String phone;
 
-    private String address;
+    @Column(name = "region_code")
+    private String regionCode;  // 법정동 코드
+
+    private String address;  // 구 주소
+
+    @Column(name = "road_address")
+    private String roadAddress;  // 도로명 주소
 
     @Enumerated(value = EnumType.ORDINAL)
     private UserStatus status;

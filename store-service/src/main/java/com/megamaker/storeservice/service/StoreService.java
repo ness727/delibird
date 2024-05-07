@@ -9,6 +9,6 @@ import org.springframework.data.domain.Slice;
 
 
 public interface StoreService {
-    Slice<ResponseStore> getStores(StoreSearchCondition searchCond, Pageable pageable);
+    Slice<ResponseStore> findAll(StoreSearchCondition searchCond, Pageable pageable);
     ResponseSaveStore save(RequestSaveStore requestSaveStore);
 }

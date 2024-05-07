@@ -1,22 +1,20 @@
 package com.megamaker.storeservice.repository;
 
 import com.megamaker.storeservice.dto.store.StoreSearchCondition;
-import com.megamaker.storeservice.entity.QStore;
 import com.megamaker.storeservice.entity.Store;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.megamaker.storeservice.entity.QStore.*;
+import static com.megamaker.storeservice.entity.QStore.store;
 
 @Repository
 @Transactional
@@ -30,10 +28,29 @@ public class StoreRepositoryImpl implements StoreRepository {
     }
 
     @Override
-    public Slice<Store> findAll(StoreSearchCondition searchCond, Pageable pageable) {
-        String regionCode = searchCond.getRegionCode();
-        Integer categoryId = searchCond.getCategoryId();
+    public Store save(Store store) {
+        entityManager.persist(store);
+        return store;
+    }
 
+    @Override
+    public Slice<Store> findAll(StoreSearchCondition searchCond, Pageable pageable) {
+        // 검색 조건 설정
+        BooleanBuilder builder = getCondResult(searchCond.getRegionCode(),
+                                               searchCond.getCategoryId());
+
+        List<Store> result = queryFactory.select(store)
+                .from(store)
+                .where(builder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        // 슬라이스로 변환
+        return toSlice(result, pageable);
+    }
+
+    private static BooleanBuilder getCondResult(String regionCode, Integer categoryId) {
         BooleanBuilder builder = new BooleanBuilder();
 
         // 법정동 코드 검색 조건
@@ -46,11 +63,18 @@ public class StoreRepositoryImpl implements StoreRepository {
             builder.and(store.category.id.eq(categoryId));
         }
 
-        List<Store> result = queryFactory.select(store)
-                .from(store)
-                .where(builder)
-                .fetch();
+        return builder;
+    }
 
-        return null;
+    private static Slice<Store> toSlice(List<Store> result, Pageable pageable) {
+        int pageSize = pageable.getPageSize();
+        boolean hasNext = false;
+
+        // 다음 슬라이스 있는지 확인
+        if (result.size() > pageSize) {
+            hasNext = true;
+            result.remove(pageSize);
+        }
+        return new SliceImpl<>(result, pageable, hasNext);
     }
 }

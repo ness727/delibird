@@ -19,9 +19,9 @@ public class StoreController {
 
     // 카테고리로 매장 검색, 쿼리 파라미터에 page, size, sort 포함
     @GetMapping
-    public Slice<ResponseStore> getStores(@ModelAttribute StoreSearchCondition searchCond,
+    public Slice<ResponseStore> findAll(@ModelAttribute StoreSearchCondition searchCond,
                                                     Pageable pageable) {
-        return storeService.getStores(searchCond, pageable);
+        return storeService.findAll(searchCond, pageable);
     }
 
 //    @PostMapping

@@ -1,5 +1,7 @@
 package com.megamaker.storeservice.mapper;
 
+import com.megamaker.storeservice.dto.store.RequestSaveStore;
+import com.megamaker.storeservice.dto.store.ResponseSaveStore;
 import com.megamaker.storeservice.dto.store.ResponseStore;
 import com.megamaker.storeservice.entity.Store;
 import org.mapstruct.Mapper;
@@ -13,5 +15,9 @@ public interface StoreMapper {
     StoreMapper INSTANCE = Mappers.getMapper(StoreMapper.class);
 
     ResponseStore toResponseStore(Store store);
+
+    Store toStore(RequestSaveStore requestSaveStore);
+
+    ResponseSaveStore toResponseSaveStore(Store store);
 
 }

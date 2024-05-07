@@ -30,4 +30,8 @@ public class Store {
     private String image;
     private String tel;
     private String description;
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

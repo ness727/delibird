@@ -14,8 +14,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -23,16 +21,19 @@ public class StoreServiceImpl implements StoreService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Slice<ResponseStore> getStores(StoreSearchCondition searchCond, Pageable pageable) {
+    public Slice<ResponseStore> findAll(StoreSearchCondition searchCond, Pageable pageable) {
         Slice<Store> foundStores = storeRepository.findAll(searchCond, pageable);
         return foundStores.map(StoreMapper.INSTANCE::toResponseStore);
     }
 
     @Override
     public ResponseSaveStore save(RequestSaveStore requestSaveStore) {
-        Optional<Category> foundCategory = categoryRepository.findById(requestSaveStore.getCategoryId());
-
-        //storeRepository.save()
-        return null;
+        // 카테고리 조회
+        Category foundCategory = categoryRepository.findById(requestSaveStore.getCategoryId()).orElseThrow();
+        Store store = StoreMapper.INSTANCE.toStore(requestSaveStore);
+        // 카테고리 category_id -> Category 객체 변환해서 지정
+        store.setCategory(foundCategory);
+        Store savedStore = storeRepository.save(store);
+        return StoreMapper.INSTANCE.toResponseSaveStore(savedStore);
     }
 }

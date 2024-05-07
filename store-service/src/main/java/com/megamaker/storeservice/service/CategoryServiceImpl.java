@@ -15,7 +15,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseCategory save(RequestCategory requestCategory) {
-
         Category savedCategory = categoryRepository.save(CategoryMapper.INSTANCE.toCategory(requestCategory));
         return CategoryMapper.INSTANCE.toResponseCategory(savedCategory);
     }

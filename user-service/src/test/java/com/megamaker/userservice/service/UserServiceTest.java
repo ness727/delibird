@@ -1,6 +1,6 @@
 package com.megamaker.userservice.service;
 
-import com.megamaker.userservice.Repository.UserRepository;
+import com.megamaker.userservice.repository.UserRepository;
 import com.megamaker.userservice.vo.Provider;
 import com.megamaker.userservice.vo.UserStatus;
 import com.megamaker.userservice.dto.RequestRegisterUser;

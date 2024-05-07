@@ -1,6 +1,6 @@
 package com.megamaker.userservice.service;
 
-import com.megamaker.userservice.Repository.UserRepository;
+import com.megamaker.userservice.repository.UserRepository;
 import com.megamaker.userservice.domain.User;
 import com.megamaker.userservice.dto.RequestRegisterUser;
 import com.megamaker.userservice.dto.ResponseCheckUser;
@@ -10,9 +10,6 @@ import com.megamaker.userservice.util.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Slf4j
 @Service

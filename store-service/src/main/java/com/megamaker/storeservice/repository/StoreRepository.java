@@ -11,5 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoreRepository {
     Store save(Store store);
+
+    Store find(Long storeId);
     Slice<Store> findAll(StoreSearchCondition searchCond, Pageable pageable);
 }

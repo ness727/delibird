@@ -34,6 +34,11 @@ public class StoreRepositoryImpl implements StoreRepository {
     }
 
     @Override
+    public Store find(Long storeId) {
+        return entityManager.find(Store.class, storeId);
+    }
+
+    @Override
     public Slice<Store> findAll(StoreSearchCondition searchCond, Pageable pageable) {
         // 검색 조건 설정
         BooleanBuilder builder = getCondResult(searchCond);

@@ -17,6 +17,11 @@ import org.springframework.data.domain.Pageable;
 public class StoreController {
     private final StoreService storeService;
 
+    @PostMapping
+    public ResponseSaveStore save(@RequestBody RequestSaveStore requestSaveStore) {
+        return storeService.save(requestSaveStore);
+    }
+
     // 카테고리로 매장 검색, 쿼리 파라미터에 page, size, sort 포함
     @GetMapping
     public Slice<ResponseStore> findAll(@ModelAttribute StoreSearchCondition searchCond,
@@ -24,8 +29,8 @@ public class StoreController {
         return storeService.findAll(searchCond, pageable);
     }
 
-    @PostMapping
-    public ResponseSaveStore save(@RequestBody RequestSaveStore requestSaveStore) {
-        return storeService.save(requestSaveStore);
+    @GetMapping("/{storeId}")
+    public ResponseStore find(@PathVariable Long storeId) {
+        return storeService.find(storeId);
     }
 }

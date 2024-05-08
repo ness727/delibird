@@ -21,12 +21,6 @@ public class StoreServiceImpl implements StoreService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Slice<ResponseStore> findAll(StoreSearchCondition searchCond, Pageable pageable) {
-        Slice<Store> foundStores = storeRepository.findAll(searchCond, pageable);
-        return foundStores.map(StoreMapper.INSTANCE::toResponseStore);
-    }
-
-    @Override
     public ResponseSaveStore save(RequestSaveStore requestSaveStore) {
         // 카테고리 조회
         Category foundCategory = categoryRepository.findById(requestSaveStore.getCategoryId()).orElseThrow();
@@ -35,5 +29,16 @@ public class StoreServiceImpl implements StoreService {
         store.setCategory(foundCategory);
         Store savedStore = storeRepository.save(store);
         return StoreMapper.INSTANCE.toResponseSaveStore(savedStore);
+    }
+
+    @Override
+    public Slice<ResponseStore> findAll(StoreSearchCondition searchCond, Pageable pageable) {
+        Slice<Store> foundStores = storeRepository.findAll(searchCond, pageable);
+        return foundStores.map(StoreMapper.INSTANCE::toResponseStore);
+    }
+
+    @Override
+    public ResponseStore find(Long storeId) {
+        return StoreMapper.INSTANCE.toResponseStore(storeRepository.find(storeId));
     }
 }

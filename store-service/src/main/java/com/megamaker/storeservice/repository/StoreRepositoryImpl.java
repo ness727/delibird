@@ -36,8 +36,7 @@ public class StoreRepositoryImpl implements StoreRepository {
     @Override
     public Slice<Store> findAll(StoreSearchCondition searchCond, Pageable pageable) {
         // 검색 조건 설정
-        BooleanBuilder builder = getCondResult(searchCond.getRegionCode(),
-                                               searchCond.getCategoryId());
+        BooleanBuilder builder = getCondResult(searchCond);
 
         List<Store> result = queryFactory.select(store)
                 .from(store)
@@ -50,8 +49,10 @@ public class StoreRepositoryImpl implements StoreRepository {
         return toSlice(result, pageable);
     }
 
-    private static BooleanBuilder getCondResult(String regionCode, Integer categoryId) {
+    private static BooleanBuilder getCondResult(StoreSearchCondition searchCondition) {
         BooleanBuilder builder = new BooleanBuilder();
+        String regionCode = searchCondition.getRegionCode();
+        Integer categoryId = searchCondition.getCategoryId();
 
         // 법정동 코드 검색 조건
         if (StringUtils.hasText(regionCode)) {

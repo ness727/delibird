@@ -1,7 +1,7 @@
 package com.megamaker.storeservice.service;
 
-import com.megamaker.storeservice.dto.category.RequestCategory;
-import com.megamaker.storeservice.dto.category.ResponseCategory;
+import com.megamaker.storeservice.dto.category.RequestSaveCategory;
+import com.megamaker.storeservice.dto.category.ResponseSaveCategory;
 import com.megamaker.storeservice.repository.CategoryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,15 +23,15 @@ class CategoryServiceImplTest {
     @Test
     public void 카테고리_저장에_성공한다() {
         // given
-        RequestCategory requestCategory = RequestCategory.builder()
+        RequestSaveCategory requestSaveCategory = com.megamaker.storeservice.dto.category.RequestSaveCategory.builder()
                 .name("중식")
                 .image("/sfs/hfg")
                 .build();
 
         // when
-        ResponseCategory savedCategory = categoryService.save(requestCategory);
+        ResponseSaveCategory savedCategory = categoryService.save(requestSaveCategory);
 
         // then
-        Assertions.assertThat(requestCategory.getName()).isEqualTo(savedCategory.getName());
+        Assertions.assertThat(requestSaveCategory.getName()).isEqualTo(savedCategory.getName());
     }
 }

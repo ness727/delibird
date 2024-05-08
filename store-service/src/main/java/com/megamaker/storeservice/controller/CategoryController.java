@@ -1,13 +1,13 @@
 package com.megamaker.storeservice.controller;
 
-import com.megamaker.storeservice.dto.category.RequestCategory;
+import com.megamaker.storeservice.dto.category.RequestSaveCategory;
 import com.megamaker.storeservice.dto.category.ResponseCategory;
+import com.megamaker.storeservice.dto.category.ResponseSaveCategory;
 import com.megamaker.storeservice.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/category")
 @RequiredArgsConstructor
@@ -16,7 +16,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping
-    public ResponseCategory save(@RequestBody RequestCategory requestCategory) {
-        return categoryService.save(requestCategory);
+    public ResponseSaveCategory save(@RequestBody RequestSaveCategory requestSaveCategory) {
+        return categoryService.save(requestSaveCategory);
+    }
+
+    @GetMapping
+    public List<ResponseCategory> findAll() {
+        return categoryService.findAll();
     }
 }

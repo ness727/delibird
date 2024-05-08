@@ -24,8 +24,8 @@ public class StoreController {
         return storeService.findAll(searchCond, pageable);
     }
 
-//    @PostMapping
-//    public ResponseSaveStore save(@RequestBody RequestSaveStore requestSaveStore) {
-//
-//    }
+    @PostMapping
+    public ResponseSaveStore save(@RequestBody RequestSaveStore requestSaveStore) {
+        return storeService.save(requestSaveStore);
+    }
 }

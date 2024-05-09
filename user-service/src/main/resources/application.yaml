@@ -28,5 +28,9 @@ eureka:
     lease-renewal-interval-in-seconds: 1  # 실제 서비스 시에 제거
     lease-expiration-duration-in-seconds: 2  # 실제 서비스 시에 제거
 
+logging:
+  level:
+    com.megamaker.userservice: debug
+
 client:
   address: localhost:3000

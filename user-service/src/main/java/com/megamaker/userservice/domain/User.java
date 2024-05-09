@@ -31,15 +31,17 @@ public class User {
     @Column(name = "region_code")
     private String regionCode;  // 법정동 코드
 
+    @Column(name = "zip_code")
+    private String zipCode;
+
     private String address;  // 구 주소
 
-    @Column(name = "road_address")
-    private String roadAddress;  // 도로명 주소
+//    @Column(name = "road_address")
+//    private String roadAddress;  // 도로명 주소
 
     @Enumerated(value = EnumType.ORDINAL)
     private UserStatus status;
 
     @Column(name = "access_token")
     private String accessToken;
-
 }

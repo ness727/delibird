@@ -8,6 +8,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @Slf4j
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -27,18 +29,6 @@ public class UserController {
         }
     }
 
-    // 특정 회원 조회
-    @GetMapping("/{userId}")
-    public ResponseEntity<ResponseUser> getUserByUserId(@PathVariable String userId) {
-        try {
-            ResponseUser user = userService.getUser(userId);
-            return ResponseEntity.ok(user);
-        } catch (DataAccessException e) {
-            log.error("User find err", e);
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     // 가입 확인
     @PostMapping("/check")
     public ResponseEntity<ResponseCheckUser> isUserAlreadyRegistered(@RequestBody RequestCheckUser userProviderId) {
@@ -48,6 +38,18 @@ public class UserController {
             return ResponseEntity.ok(responseCheckUser);
         } catch (DataAccessException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    // 특정 회원 조회
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserByUserId(@PathVariable String userId) {
+        try {
+            ResponseUser user = userService.getUser(userId);
+            return ResponseEntity.ok(user);
+        } catch (DataAccessException | NoSuchElementException e) {
+            log.debug("User find err", e);
+            return ResponseEntity.badRequest().body("회원 조회 실패");
         }
     }
 }

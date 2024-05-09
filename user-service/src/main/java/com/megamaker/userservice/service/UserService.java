@@ -1,11 +1,11 @@
 package com.megamaker.userservice.service;
 
-import com.megamaker.userservice.repository.UserRepository;
 import com.megamaker.userservice.domain.User;
 import com.megamaker.userservice.dto.RequestRegisterUser;
 import com.megamaker.userservice.dto.ResponseCheckUser;
 import com.megamaker.userservice.dto.ResponseRegisterUser;
 import com.megamaker.userservice.dto.ResponseUser;
+import com.megamaker.userservice.repository.UserRepository;
 import com.megamaker.userservice.util.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

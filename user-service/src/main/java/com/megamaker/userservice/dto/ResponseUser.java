@@ -11,15 +11,12 @@ import lombok.*;
 @Getter
 public class ResponseUser {
     private String userId;
-
-    private String providerId;
-
+    // private String providerId;
     private String nickname;
-
     private String phone;
-
-    private String address;
-
-    @Enumerated(value = EnumType.STRING)
+    //@Enumerated(value = EnumType.STRING)
     private UserStatus status;
+    private String regionCode;
+    private String zipCode;
+    private String address;
 }

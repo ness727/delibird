@@ -41,6 +41,9 @@ dependencies {
     // Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
+    // Bus-Kafka
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
+
     // Gateway
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 

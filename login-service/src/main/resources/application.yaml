@@ -9,6 +9,12 @@ spring:
     config:
       name: delibird, login-service
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, busrefresh
+
 #oauth2:
 #  logout:
 #    uri:

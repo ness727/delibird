@@ -1,38 +1,19 @@
 server:
   port: 8000
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    lease-renewal-interval-in-seconds: 1 # 디스커버리한테 1초마다 하트비트 전송  (기본 30초)
-    lease-expiration-duration-in-seconds: 2 # 디스커버리는 서비스 등록 해제 하기 전에 마지막 하트비트에서부터 2초 기다림
-    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
-
 spring:
   application:
     name: gateway-service
 
   config:
-    import:
-      - classpath:secrets.yaml
+    import: optional:configserver:http://localhost:8888
 
   cloud:
-#    config:
-#      name: ecommerce
-    #      name: ecommerce
-    #      profile: dev
+    config:
+      name: delibird
+      enabled: true
 
     gateway:
-#      default-filters:
-#        - name: GlobalFilter
-#          args:
-#            baseMessage: Spring Cloud Gateway Global Filter
-#            preLogger: true
-#            postLogger: true
       routes:
         # Login-Service
         - id: login-service
@@ -50,6 +31,12 @@ spring:
             - Method=POST
           filters:
             - AuthorizationCookieFilter
+
+        - id: login-service
+          uri: lb://LOGIN-SERVICE
+          predicates:
+            - Path=/img/**
+            - Method=GET
 
         # User-Service
         - id: user-service
@@ -88,18 +75,13 @@ spring:
           predicates:
             - Path=/users/**
             - Method=GET
-         # filters:
-          # - RemoveRequestHeader=Cookie
-          # - AuthorizationCookieFilter
 
-#token:
-#  secret: test12341234@test1234567890.com
+logging:
+  level:
+    com.megamaker.gatewayservice: debug
 
 management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httpexchanges, busrefresh
-logging:
-  level:
-    com.megamaker.gatewayservice: debug
+        include: refresh, busrefresh

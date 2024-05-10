@@ -30,7 +30,8 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return web -> web.ignoring()
-                .requestMatchers("/img/**", "/css/**", "/js/**", "/assets/**", "/error");  // 정적 자원은 필터 무시
+                .requestMatchers("/img/**", "/css/**", "/js/**", "/assets/**",
+                        "/error", "/actuator/**");  // 정적 자원은 필터 무시
     }
 
     // 특정 Http 요청에 대한 보안 설정

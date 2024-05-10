@@ -6,16 +6,10 @@ spring:
     name: product-service
 
   config:
-    import:
-      - classpath:secrets.yaml
+    import: optional:configserver:http://localhost:8888
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/
-  instance:
-    instance-id: ${spring.cloud.client.ip-address}:${random.value}
-    lease-renewal-interval-in-seconds: 1  # 실제 서비스 시에 제거
-    lease-expiration-duration-in-seconds: 2  # 실제 서비스 시에 제거
+  cloud:
+    config:
+      name:
+        - delibird
+        - product-service

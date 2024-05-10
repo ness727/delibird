@@ -38,7 +38,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
         Key secretKey = new SecretKeySpec(Base64.getEncoder().encode(environment.getProperty("token.secret").getBytes()),
                 Jwts.SIG.HS256.key().build().getAlgorithm());
-        log.info(environment.getProperty("token.secret"));
+        
         String token = Jwts.builder()
                 .subject(userId)
                 .expiration(new Date(System.currentTimeMillis() +
@@ -46,12 +46,12 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                 .signWith(secretKey)
                 .compact();
 
-        Cookie cookie = getCookie("Auth", token);
+        Cookie cookie = makeCookie("Auth", token);
         response.addCookie(cookie);
         response.sendRedirect("http://localhost:8000/");
     }
 
-    private static Cookie getCookie(String name, String token) {
+    private static Cookie makeCookie(String name, String token) {
         Cookie cookie = new Cookie(name, token);
         cookie.setPath("/");
         cookie.setHttpOnly(true);

@@ -7,30 +7,23 @@ spring:
 
   config:
     import:
-      - classpath:secrets.yaml
+      - optional:configserver:http://localhost:8888
 
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
+  cloud:
+    config:
+      name: delibird, user-service
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/
-  instance:
-    instance-id: ${spring.cloud.client.ip-address}:${random.value}
-    lease-renewal-interval-in-seconds: 1  # 실제 서비스 시에 제거
-    lease-expiration-duration-in-seconds: 2  # 실제 서비스 시에 제거
-
 logging:
   level:
     com.megamaker.userservice: debug
 
-client:
-  address: localhost:3000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, busrefresh

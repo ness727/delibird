@@ -1,0 +1,28 @@
+server:
+  port: 8888
+
+spring:
+  config:
+    import: classpath:secret.yaml
+
+  application:
+    name: config-service
+
+  # 카프카 클러스터 주소
+  kafka:
+    bootstrap-servers: http://localhost:9092
+
+  cloud:
+    bus:  # 카프카 토픽명
+      destination: delibird-config
+
+    config:
+      server:
+        git:
+          uri: https://github.com/ness727/delibird-config
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh

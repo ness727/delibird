@@ -7,7 +7,6 @@ import com.megamaker.loginservice.dto.ResponseCheckUser;
 import com.megamaker.loginservice.vo.Provider;
 import com.megamaker.loginservice.vo.UserStatus;
 import com.megamaker.loginservice.feignclient.UserClient;
-import com.megamaker.loginservice.legacy.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -25,7 +24,6 @@ import java.util.UUID;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final Environment environment;
     private final UserClient userClient;
-    private final TokenRepository tokenRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

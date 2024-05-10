@@ -38,8 +38,13 @@ dependencies {
     // Spring Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    // Cloud Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // Gateway
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 
+    // Eureka Client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
@@ -51,8 +56,10 @@ dependencies {
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

@@ -1,12 +1,29 @@
 spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  cloud:
+    config:
+      name:
+        - delebird
+        - user-service
+
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
     username: sa
     password:
+
   jpa:
     hibernate:
       ddl-auto: create-drop
+
 logging:
   level:
     com.megamaker.userservice.service: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, busrefresh

@@ -26,19 +26,11 @@ ext {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Bus-Kafka
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
 
-    // Data JPA
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    // Mariadb
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-
-    // Eureka Client
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
-    // Cloud Config
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    // Config Server
+    implementation 'org.springframework.cloud:spring-cloud-config-server'
 
     // Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -46,7 +38,6 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

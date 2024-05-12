@@ -19,7 +19,7 @@ spring:
         - id: login-service
           uri: lb://LOGIN-SERVICE
           predicates:
-            - Path=/login, /oauth2/**
+            - Path=/oauth2/authorization/**
             - Method=GET
           filters:
             - BeforeLoginFilter
@@ -42,6 +42,12 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
+            - Path=/users/check
+            - Method=POST
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/users
             - Method=POST
           filters:
@@ -50,31 +56,10 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/
+            - Path=/, /users/**
             - Method=GET
           filters:
             - AuthorizationCookieFilter
-
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/users/check
-            - Method=POST
-
-#        - id: user-service
-#          uri: lb://USER-SERVICE
-#          predicates:
-#            - Path=/user-service/actuator/**
-#            - Method=GET, POST
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/users/**
-            - Method=GET
 
 logging:
   level:

@@ -59,14 +59,11 @@ public class AuthorizationCookieFilter extends AbstractGatewayFilterFactory<Auth
         byte[] secretKeyBytes = Base64.getEncoder().encode(environment.getProperty("token.secret").getBytes());
         SecretKey secretKey = new SecretKeySpec(secretKeyBytes, Jwts.SIG.HS256.key().build().getAlgorithm());
 
-        log.info(environment.getProperty("token.secret"));
-
         try {
             JwtParser jwtParser = Jwts.parser()
                     .verifyWith(secretKey)
                     .build();
             subject = jwtParser.parseSignedClaims(jwt).getPayload().getSubject();
-            log.info("subject: " + subject);
         } catch (Exception ex) {
             returnValue = false;
         }
@@ -80,7 +77,7 @@ public class AuthorizationCookieFilter extends AbstractGatewayFilterFactory<Auth
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
 
-        response.getHeaders().setLocation(URI.create("http://localhost:8000/login"));
+        response.getHeaders().setLocation(URI.create(environment.getProperty("client.address")));
         response.setStatusCode(HttpStatus.FOUND);
 
         log.debug(err);

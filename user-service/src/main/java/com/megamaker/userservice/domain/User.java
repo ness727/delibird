@@ -1,5 +1,6 @@
 package com.megamaker.userservice.domain;
 
+import com.megamaker.userservice.dto.RequestUpdateUser;
 import com.megamaker.userservice.vo.Provider;
 import com.megamaker.userservice.vo.UserStatus;
 import jakarta.persistence.*;
@@ -44,4 +45,12 @@ public class User {
 
     @Column(name = "access_token")
     private String accessToken;
+
+    public void update(RequestUpdateUser updateUser) {
+        if (updateUser.getNickname() != null) this.nickname = updateUser.getNickname();
+        if (updateUser.getPhone() != null) this.phone = updateUser.getPhone();
+        if (updateUser.getRegionCode() != null) this.regionCode = updateUser.getRegionCode();
+        if (updateUser.getZipCode() != null) this.zipCode = updateUser.getZipCode();
+        if (updateUser.getAddress() != null) this.address = updateUser.getAddress();
+    }
 }

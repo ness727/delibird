@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -15,6 +16,7 @@ import java.io.IOException;
 @Controller
 @RequiredArgsConstructor
 public class LogoutController {
+    private final Environment environment;
 
     @PostMapping("/logout")
     public void logout(@CookieValue(value = "Auth") String userToken, HttpServletResponse response) throws IOException {
@@ -23,7 +25,7 @@ public class LogoutController {
 
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        response.sendRedirect("http://localhost:8000/");
+        response.sendRedirect(environment.getProperty("client.address"));
 
 
     }

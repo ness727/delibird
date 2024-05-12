@@ -1,8 +1,11 @@
 package com.megamaker.gatewayservice.filter;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -15,8 +18,12 @@ import java.net.URI;
 @Slf4j
 @Component
 public class BeforeLoginFilter extends AbstractGatewayFilterFactory<BeforeLoginFilter.Config> {
-    public BeforeLoginFilter() {
+    private final Environment environment;
+
+    @Autowired
+    public BeforeLoginFilter(Environment environment) {
         super(Config.class);
+        this.environment = environment;
     }
 
     @Override
@@ -34,7 +41,7 @@ public class BeforeLoginFilter extends AbstractGatewayFilterFactory<BeforeLoginF
                 if (referer != null) {
                     uri = URI.create(referer);
                 } else {
-                    uri = URI.create("http://localhost:8000/");
+                    uri = URI.create(environment.getProperty("client.address"));
                 }
 
                 response.getHeaders().setLocation(uri);

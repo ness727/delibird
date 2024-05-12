@@ -1,4 +1,4 @@
-package com.megamaker.loginservice.security;
+package com.megamaker.userservice.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
@@ -19,8 +18,11 @@ public class CustomCorsConfig implements CorsConfigurationSource {
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
         CorsConfiguration corsConfig = new CorsConfiguration();
 
-        corsConfig.setAllowedOrigins(List.of(environment.getProperty("gateway.address")));
-        corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE"));
+        corsConfig.setAllowedOrigins(List.of(
+                environment.getProperty("gateway.address"),
+                environment.getProperty("login-service.address"))
+        );
+        corsConfig.setAllowedMethods(List.of("*"));
         corsConfig.setAllowedHeaders(List.of("*"));
         return corsConfig;
     }

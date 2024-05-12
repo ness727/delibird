@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.megamaker'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 
 java {
     sourceCompatibility = '17'
@@ -31,11 +31,11 @@ dependencies {
     // eureka client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-    // Thymeleaf - 나중에 삭제
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
     // Data JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
@@ -48,6 +48,15 @@ dependencies {
 
     // MariaDB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation 'io.jsonwebtoken:jjwt:0.12.3'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
     // 테스트용 h2
     testImplementation 'com.h2database:h2'

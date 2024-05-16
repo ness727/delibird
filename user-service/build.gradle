@@ -49,6 +49,9 @@ dependencies {
     // MariaDB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
+    // MySQL
+    implementation 'com.mysql:mysql-connector-j:8.3.0'
+
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation 'io.jsonwebtoken:jjwt:0.12.3'
 

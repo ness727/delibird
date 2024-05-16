@@ -11,7 +11,9 @@ spring:
 
   cloud:
     config:
-      name: delibird, user-service
+      name: delibird, database
+  profiles:
+    active: dev
 
   jpa:
     hibernate:

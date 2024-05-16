@@ -8,10 +8,6 @@ spring:
   application:
     name: config-service
 
-  # 카프카 클러스터 주소
-  kafka:
-    bootstrap-servers: http://localhost:9092
-
   cloud:
     bus:  # 카프카 토픽명
       destination: delibird-config

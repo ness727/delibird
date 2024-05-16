@@ -4,6 +4,7 @@ import com.megamaker.loginservice.security.oauth2.CustomOAuth2User;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -46,15 +48,16 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                 .signWith(secretKey)
                 .compact();
 
-        Cookie cookie = makeCookie("Auth", token);
-        response.addCookie(cookie);
+        ResponseCookie cookie = makeCookie("Auth", token);
+        response.setHeader("Set-Cookie", cookie.toString());
         response.sendRedirect(environment.getProperty("client.address"));
     }
 
-    private static Cookie makeCookie(String name, String token) {
-        Cookie cookie = new Cookie(name, token);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        return cookie;
+    private static ResponseCookie makeCookie(String name, String token) {
+        return ResponseCookie.from(name, token)
+                .domain(".delibird.store")
+                .path("/")
+                .httpOnly(true)
+                .build();
     }
 }

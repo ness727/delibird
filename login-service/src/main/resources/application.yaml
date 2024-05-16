@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: login-service
@@ -8,6 +11,8 @@ spring:
   cloud:
     config:
       name: delibird, login-service
+  profiles:
+    active: dev
 
 management:
   endpoints:
@@ -18,4 +23,5 @@ management:
 #oauth2:
 #  logout:
 #    uri:
+
 #      naver: https://nid.naver.com/oauth2.0/token

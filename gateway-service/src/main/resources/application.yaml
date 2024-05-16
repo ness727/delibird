@@ -8,6 +8,9 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
 
+  profiles:
+    active: dev
+
   cloud:
     config:
       name: delibird
@@ -23,6 +26,12 @@ spring:
             - Method=GET
           filters:
             - BeforeLoginFilter
+
+        - id: login-service
+          uri: lb://LOGIN-SERVICE
+          predicates:
+            - Path=/login/**
+            - Method=GET
 
         - id: login-service
           uri: lb://LOGIN-SERVICE

@@ -1,5 +1,5 @@
 #!/bin/bash
 # micro
 # sleep 30
-sleep 20
+sleep 30
 exec java -jar GatewayService.jar

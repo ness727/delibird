@@ -1,5 +1,5 @@
 #!/bin/bash
 # micro
 # sleep 50
-sleep 30
+sleep 40
 exec java -jar LoginService.jar

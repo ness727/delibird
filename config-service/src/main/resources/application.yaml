@@ -16,7 +16,8 @@ spring:
       server:
         git:
           uri: https://github.com/ness727/delibird-config
-
+          basedir: ./config-git  # 임시 디렉토리 대신 임의의 폴더로 받기
+          
 management:
   endpoints:
     web:

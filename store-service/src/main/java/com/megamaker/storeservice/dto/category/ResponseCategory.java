@@ -6,6 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class ResponseCategory {
+    private Integer id;
     private String name;
     private String image;
 }

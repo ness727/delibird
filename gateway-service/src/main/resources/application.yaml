@@ -65,7 +65,7 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/, /users/**
+            - Path=/users/**
             - Method=GET
           filters:
             - AuthorizationCookieFilter

@@ -26,9 +26,22 @@ ext {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // eureka client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // Cloud Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // Bus-Kafka
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
+
+    // Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -47,7 +60,11 @@ dependencies {
     // 테스트용 h2
     testImplementation 'com.h2database:h2'
 
+    // MariaDB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    // MySQL
+    implementation 'com.mysql:mysql-connector-j:8.3.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

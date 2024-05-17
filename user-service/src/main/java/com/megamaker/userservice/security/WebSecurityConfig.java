@@ -20,7 +20,6 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
-    private final CustomCorsConfig customCorsConfig;
     private final Environment environment;
     private final UserRepository userRepository;
 
@@ -36,11 +35,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // CORS 허용 커스텀 설정
-                .cors(c -> c
-                        .configurationSource(customCorsConfig)
-                )
 
                 // httpBasic 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)

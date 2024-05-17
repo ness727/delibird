@@ -8,6 +8,17 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+  config:
+    import:
+      - optional:configserver:http://localhost:8888
+
+  cloud:
+    config:
+      name: delibird, database
+
+  profiles:
+    active: dev
+
 logging:
   level:
     com.megamaker.storeservice.service: DEBUG

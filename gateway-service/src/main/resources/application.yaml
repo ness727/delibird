@@ -65,10 +65,18 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/users/**
+            - Path=/users, /users/**
             - Method=GET
           filters:
             - AuthorizationCookieFilter
+
+        # Store-Service
+        - id: store-service
+          uri: lb://STORE-SERVICE
+          predicates:
+            - Path=/categories, /images/**
+            - Method=GET
+
 
 logging:
   level:

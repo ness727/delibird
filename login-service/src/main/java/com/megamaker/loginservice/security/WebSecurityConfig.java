@@ -24,7 +24,6 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Configuration
 public class WebSecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final CustomCorsConfig customCorsConfig;
     private final LoginSuccessHandler loginSuccessHandler;
 
     @Bean
@@ -40,11 +39,6 @@ public class WebSecurityConfig {
         return http
                 // CSRF 테스트를 위한 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // CORS 허용 커스텀 설정
-                .cors(c -> c
-                        .configurationSource(customCorsConfig)
-                )
 
                 // httpBasic 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)

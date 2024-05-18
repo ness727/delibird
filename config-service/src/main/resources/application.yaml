@@ -2,11 +2,14 @@ server:
   port: 8888
 
 spring:
+  application:
+    name: config-service
+
   config:
     import: classpath:secret.yaml
 
-  application:
-    name: config-service
+  kafka:
+    bootstrap-servers: http://api.delibird.store:9092
 
   cloud:
     bus:  # 카프카 토픽명
@@ -22,4 +25,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, busrefresh
+        include: refresh, busrefresh

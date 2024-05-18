@@ -53,9 +53,9 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         response.sendRedirect(environment.getProperty("client.address"));
     }
 
-    private static ResponseCookie makeCookie(String name, String token) {
+    private ResponseCookie makeCookie(String name, String token) {
         return ResponseCookie.from(name, token)
-                .domain(".delibird.store")
+                .domain(environment.getProperty("cookie.domain"))
                 .path("/")
                 .httpOnly(true)
                 .build();

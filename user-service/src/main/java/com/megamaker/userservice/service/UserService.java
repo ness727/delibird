@@ -1,16 +1,13 @@
 package com.megamaker.userservice.service;
 
-import com.megamaker.userservice.domain.User;
+import com.megamaker.userservice.Entity.User;
 import com.megamaker.userservice.dto.*;
 import com.megamaker.userservice.repository.UserRepository;
 import com.megamaker.userservice.util.UserMapper;
-import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @Slf4j
 @Service

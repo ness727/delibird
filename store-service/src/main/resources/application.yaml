@@ -5,21 +5,13 @@ spring:
   application:
     name: store-service
 
+  config:
+    import: classpath:/bootstrap.yaml
+
   data:
     web:
       pageable:
         one-indexed-parameters: true
-
-  config:
-    import:
-      - optional:configserver:http://localhost:8888
-
-  cloud:
-    config:
-      name: delibird, database
-
-  profiles:
-    active: dev
 
   jpa:
     hibernate:

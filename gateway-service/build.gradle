@@ -41,6 +41,9 @@ dependencies {
     // Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
     // Bus-Kafka
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
 

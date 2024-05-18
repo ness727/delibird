@@ -6,13 +6,12 @@ spring:
     name: login-service
 
   config:
-    import: optional:configserver:http://localhost:8888
+    import: classpath:/bootstrap.yaml
 
   cloud:
-    config:
-      name: delibird, login-service
-  profiles:
-    active: dev
+    bus:
+      trace:
+        enabled: true
 
 management:
   endpoints:

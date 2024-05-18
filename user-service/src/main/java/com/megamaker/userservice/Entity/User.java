@@ -1,4 +1,4 @@
-package com.megamaker.userservice.domain;
+package com.megamaker.userservice.Entity;
 
 import com.megamaker.userservice.dto.RequestUpdateUser;
 import com.megamaker.userservice.vo.Provider;
@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "users")
 @Entity
-public class User {
+public class User extends BaseDateTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

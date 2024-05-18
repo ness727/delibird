@@ -6,16 +6,9 @@ spring:
     name: gateway-service
 
   config:
-    import: optional:configserver:http://localhost:8888
-
-  profiles:
-    active: dev
+    import: classpath:/bootstrap.yaml
 
   cloud:
-    config:
-      name: delibird
-      enabled: true
-
     gateway:
       routes:
         # Login-Service
@@ -77,13 +70,12 @@ spring:
             - Path=/categories, /images/**
             - Method=GET
 
-
 logging:
   level:
     com.megamaker.gatewayservice: debug
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, busrefresh
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh, busrefresh

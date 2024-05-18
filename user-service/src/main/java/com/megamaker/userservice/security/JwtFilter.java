@@ -1,6 +1,6 @@
 package com.megamaker.userservice.security;
 
-import com.megamaker.userservice.domain.User;
+import com.megamaker.userservice.Entity.User;
 import com.megamaker.userservice.repository.UserRepository;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +24,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -74,6 +71,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         return (request.getServletPath().equals("/users") && request.getMethod().equals("POST"))
-                || request.getServletPath().equals("/users/check");
+                || request.getServletPath().equals("/users/check")
+                || request.getServletPath().startsWith("/actuator");
     }
 }

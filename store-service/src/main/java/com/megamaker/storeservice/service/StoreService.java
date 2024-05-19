@@ -6,6 +6,7 @@ import com.megamaker.storeservice.dto.store.ResponseStore;
 import com.megamaker.storeservice.dto.store.StoreSearchCondition;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.security.core.Authentication;
 
 
 public interface StoreService {

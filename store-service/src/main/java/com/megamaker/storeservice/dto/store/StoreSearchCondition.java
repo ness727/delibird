@@ -1,15 +1,16 @@
 package com.megamaker.storeservice.dto.store;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@ToString
 @Getter
 public class StoreSearchCondition {
+    Integer categoryId;
+    String storeName;
     String regionCode;
-    Integer CategoryId;
+
+    public void setRegionCode(String regionCode) {
+        this.regionCode = regionCode;
+    }
 }

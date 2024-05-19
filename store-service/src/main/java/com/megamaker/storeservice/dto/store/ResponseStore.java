@@ -8,10 +8,10 @@ import lombok.Getter;
 @Getter
 public class ResponseStore {
     private String name;
-    private String region1;  // 시도
-    private String region2;  // 구
-    private String region3;  // 동
-    private String region4;  // 상세 주소
+    private Integer categoryId;
+    private Integer deliveryFees;
+    private String address;  // 구 주소
+    private String roadAddress;  // 도로명 주소
     private String image;
     private String tel;
     private String description;

@@ -2,6 +2,7 @@ package com.megamaker.storeservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @AllArgsConstructor
@@ -9,7 +10,7 @@ import lombok.*;
 @Builder
 @Table(name = "stores")
 @Entity
-public class Store {
+public class Store extends BaseDateTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -18,6 +19,9 @@ public class Store {
     private Category category;
 
     private String name;
+
+    @ColumnDefault("0")
+    private Integer deliveryFees;
 
     @Column(name = "region_code")
     private String regionCode;  // 법정동 코드

@@ -13,6 +13,7 @@ import lombok.Getter;
 public class RequestSaveStore {
     private Integer categoryId;
     private String name;
+    private Integer deliveryFees;
     private String regionCode;  // 법정동 코드
     private String address;  // 구 주소
     private String roadAddress;  // 도로명 주소

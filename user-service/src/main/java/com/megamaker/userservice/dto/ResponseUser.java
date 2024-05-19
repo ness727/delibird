@@ -14,8 +14,10 @@ public class ResponseUser {
     // private String providerId;
     private String nickname;
     private String phone;
-    //@Enumerated(value = EnumType.STRING)
+
+    @Enumerated(value = EnumType.STRING)
     private UserStatus status;
+
     private String regionCode;
     private String zipCode;
     private String address;

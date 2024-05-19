@@ -1,7 +1,8 @@
-package com.megamaker.userservice.security;
+package com.megamaker.storeservice.security;
 
-import com.megamaker.userservice.Entity.User;
-import com.megamaker.userservice.repository.UserRepository;
+import com.megamaker.storeservice.dto.user.ResponseUser;
+import com.megamaker.storeservice.feignclient.UserClient;
+import feign.FeignException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,55 +31,39 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    private final Environment environment;
-    private final UserRepository userRepository;
+    private final UserClient userClient;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        // 쿠키에서 jwt 가져옴
         String jwt = null;
-
-        // 헤더에서 JWT 가져옴 보냈을 때
-        String headerToken = request.getHeader("Auth");
-        if (headerToken != null) {
-            jwt = headerToken;
-        }
-        else {  // 쿠키에서 JWT 가져옴
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("Auth")) {
-                    jwt = cookie.getValue();
-                }
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("Auth")) {
+                jwt = cookie.getValue();
             }
         }
 
         try {
-            byte[] secretKeyBytes = Base64.getEncoder().encode(environment.getProperty("token.secret").getBytes());
-            SecretKey secretKey = new SecretKeySpec(secretKeyBytes, Jwts.SIG.HS256.key().build().getAlgorithm());
-
-            JwtParser jwtParser = Jwts.parser()
-                    .verifyWith(secretKey)
+            ResponseUser foundUser = userClient.getUserByToken(jwt);  // 유저 서비스에서 유저 정보 조회
+            // 새 유저 인증 객체 생성
+            Authentication auth = UserAuthentication.builder()
+                    .principal(foundUser.getUserId())
+                    .regionCode(foundUser.getRegionCode())
+                    .authorities(List.of(new SimpleGrantedAuthority(foundUser.getStatus())))
                     .build();
-            String userId = jwtParser.parseSignedClaims(jwt).getPayload().getSubject();
-
-            // 회원 조회
-            User foundUser = userRepository.findByUserId(userId).orElseThrow();
-
-            Authentication auth = new UsernamePasswordAuthenticationToken(  // 새 유저 인증 객체 생성
-                    foundUser.getUserId(),
-                    null,
-                    List.of(new SimpleGrantedAuthority(foundUser.getStatus().name()))
-            );
 
             SecurityContextHolder.getContext().setAuthentication(auth);
-            doFilter(request, response, filterChain);
         } catch (RuntimeException e) {
             log.debug("인증 정보 불일치");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
+        doFilter(request, response, filterChain);
     }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return !request.getServletPath().equals("/users");
+        // 매장 검색 또는 카테고리 선택 시
+        return !request.getServletPath().equals("/stores") && request.getMethod().equals("GET");
     }
 }

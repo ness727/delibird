@@ -70,6 +70,14 @@ spring:
             - Path=/categories, /images/**
             - Method=GET
 
+        - id: store-service
+          uri: lb://STORE-SERVICE
+          predicates:
+            - Path=/stores, /stores/**
+            - Method=GET
+          filters:
+            - AuthorizationCookieFilter
+
 logging:
   level:
     com.megamaker.gatewayservice: debug

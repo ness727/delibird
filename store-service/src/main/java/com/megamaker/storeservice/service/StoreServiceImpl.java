@@ -1,19 +1,19 @@
 package com.megamaker.storeservice.service;
 
-import com.megamaker.storeservice.dto.store.RequestSaveStore;
-import com.megamaker.storeservice.dto.store.ResponseSaveStore;
-import com.megamaker.storeservice.dto.store.ResponseStore;
-import com.megamaker.storeservice.dto.store.StoreSearchCondition;
+import com.megamaker.storeservice.dto.store.*;
 import com.megamaker.storeservice.entity.Category;
 import com.megamaker.storeservice.entity.Store;
 import com.megamaker.storeservice.mapper.StoreMapper;
 import com.megamaker.storeservice.repository.CategoryRepository;
 import com.megamaker.storeservice.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -32,9 +32,9 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Slice<ResponseStore> findAll(StoreSearchCondition searchCond, Pageable pageable) {
+    public Slice<ResponseListStore> findAll(StoreSearchCondition searchCond, Pageable pageable) {
         Slice<Store> foundStores = storeRepository.findAll(searchCond, pageable);
-        return foundStores.map(StoreMapper.INSTANCE::toResponseStore);
+        return foundStores.map(StoreMapper.INSTANCE::toResponseListStore);
     }
 
     @Override

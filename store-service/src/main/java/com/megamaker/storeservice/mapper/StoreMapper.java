@@ -1,6 +1,7 @@
 package com.megamaker.storeservice.mapper;
 
 import com.megamaker.storeservice.dto.store.RequestSaveStore;
+import com.megamaker.storeservice.dto.store.ResponseListStore;
 import com.megamaker.storeservice.dto.store.ResponseSaveStore;
 import com.megamaker.storeservice.dto.store.ResponseStore;
 import com.megamaker.storeservice.entity.Category;
@@ -16,8 +17,11 @@ import static org.mapstruct.MappingConstants.*;
 public interface StoreMapper {
     StoreMapper INSTANCE = Mappers.getMapper(StoreMapper.class);
 
-    @Mapping(source = "category.id", target = "categoryId")
+
     ResponseStore toResponseStore(Store store);
+
+    //@Mapping(source = "category.id", target = "categoryId")
+    ResponseListStore toResponseListStore(Store store);
 
     Store toStore(RequestSaveStore requestSaveStore);
 

@@ -1,6 +1,7 @@
 package com.megamaker.storeservice.repository;
 
 import com.megamaker.storeservice.dto.store.StoreSearchCondition;
+import com.megamaker.storeservice.entity.QProduct;
 import com.megamaker.storeservice.entity.QStore;
 import com.megamaker.storeservice.entity.Store;
 import com.querydsl.core.BooleanBuilder;
@@ -47,7 +48,13 @@ public class StoreRepositoryImpl implements StoreRepository {
 
     @Override
     public Store find(Long storeId) {
-        return entityManager.find(Store.class, storeId);
+        return queryFactory.select(store)
+                .from(store)
+                .leftJoin(store.productList, QProduct.product).on()
+                .fetchJoin()
+                .where(store.id.eq(storeId))
+                .distinct()
+                .fetchOne();
     }
 
     @Override

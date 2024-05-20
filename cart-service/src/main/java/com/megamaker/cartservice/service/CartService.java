@@ -1,0 +1,20 @@
+package com.megamaker.cartservice.service;
+
+import com.megamaker.cartservice.domain.Cart;
+import com.megamaker.cartservice.dto.RequestAddCart;
+import com.megamaker.cartservice.repository.RedisRepository;
+import com.megamaker.cartservice.util.CartMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class CartService {
+    private final RedisRepository redisRepository;
+
+    public void add(String userId, RequestAddCart requestAddCart) {
+        Cart cart = CartMapper.INSTANCE.toCart(requestAddCart);
+        cart.setUserId(userId);
+        redisRepository.save(cart);
+    }
+}

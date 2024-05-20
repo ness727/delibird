@@ -78,6 +78,14 @@ spring:
           filters:
             - AuthorizationCookieFilter
 
+        # Cart-Service
+        - id: cart-service
+          uri: lb://CART-SERVICE
+          predicates:
+            - Path=/cart
+            - Method=POST
+
+
 logging:
   level:
     com.megamaker.gatewayservice: debug

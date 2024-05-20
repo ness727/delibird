@@ -23,8 +23,4 @@ public class ResponseStore {
     private String description;
 
     private List<ResponseProduct> productList;
-
-    public void setProductList(List<ResponseProduct> productList) {
-        this.productList = productList;
-    }
 }

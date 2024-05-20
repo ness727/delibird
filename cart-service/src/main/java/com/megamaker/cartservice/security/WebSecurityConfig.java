@@ -1,9 +1,9 @@
-package com.megamaker.storeservice.security;
+package com.megamaker.cartservice.security;
 
-import com.megamaker.storeservice.feignclient.UserClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
-    private final UserClient userClient;
+    private final Environment environment;
 
     @Bean
     public WebSecurityCustomizer configure() {
@@ -42,7 +42,7 @@ public class WebSecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 // JWT로 userId 얻어 저장하는 필터 추가
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
 
                 // 세션 비활성화
                 .sessionManagement(session -> session
@@ -62,7 +62,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public LoginFilter jwtFilter() {
-        return new LoginFilter(userClient);
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(environment);
     }
 }

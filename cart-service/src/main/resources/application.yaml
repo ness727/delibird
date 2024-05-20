@@ -3,19 +3,14 @@ server:
 
 spring:
   application:
-    name: user-service
+    name: cart-service
 
   config:
     import: classpath:/bootstrap.yaml
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
 logging:
   level:
-    com.megamaker.userservice: debug
+    com.megamaker.cartservice: debug
 
 management:
   endpoints:

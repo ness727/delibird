@@ -8,7 +8,8 @@ import java.util.Map;
 
 @Builder
 @Getter
-public class RequestAddCart {
-    private Long storeId;
+public class ResponseCart {
+    private String userId;
+    private String storeId;
     private Map<Integer, Integer> productQuantityMap;
 }

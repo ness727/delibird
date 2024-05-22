@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 @Getter
 public class ResponseStore {
+    private Long id;
     private String name;
     private Integer categoryId;
     private Integer deliveryFees;

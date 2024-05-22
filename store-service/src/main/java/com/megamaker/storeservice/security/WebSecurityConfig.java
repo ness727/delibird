@@ -62,7 +62,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public LoginFilter jwtFilter() {
-        return new LoginFilter(userClient);
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(userClient);
     }
 }

@@ -2,6 +2,7 @@ package com.megamaker.cartservice.util;
 
 import com.megamaker.cartservice.domain.Cart;
 import com.megamaker.cartservice.dto.RequestAddCart;
+import com.megamaker.cartservice.dto.ResponseCart;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -13,4 +14,6 @@ public interface CartMapper {
     CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
 
     Cart toCart(RequestAddCart requestAddCart);
+
+    ResponseCart toResponseCart(Cart cart);
 }

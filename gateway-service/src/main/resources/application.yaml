@@ -85,6 +85,12 @@ spring:
             - Path=/cart
             - Method=POST
 
+        - id: cart-service
+          uri: lb://CART-SERVICE
+          predicates:
+            - Path=/cart
+            - Method=GET
+
 
 logging:
   level:

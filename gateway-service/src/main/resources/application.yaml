@@ -10,6 +10,26 @@ spring:
 
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"  # 개발용
+            allow-credentials: true
+            allowedHeaders:
+                - x-requested-with
+                - authorization
+                - content-type
+                - credential
+                - X-AUTH-TOKEN
+                - X-CSRF-TOKEN
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+
       routes:
         # Login-Service
         - id: login-service
@@ -23,7 +43,7 @@ spring:
         - id: login-service
           uri: lb://LOGIN-SERVICE
           predicates:
-            - Path=/login/**
+            - Path=/login/**, /img/**
             - Method=GET
 
         - id: login-service
@@ -33,12 +53,6 @@ spring:
             - Method=POST
           filters:
             - AuthorizationCookieFilter
-
-        - id: login-service
-          uri: lb://LOGIN-SERVICE
-          predicates:
-            - Path=/img/**
-            - Method=GET
 
         # User-Service
         - id: user-service
@@ -67,7 +81,7 @@ spring:
         - id: store-service
           uri: lb://STORE-SERVICE
           predicates:
-            - Path=/categories, /images/**
+            - Path=/categories, /products, /images/**
             - Method=GET
 
         - id: store-service
@@ -91,6 +105,12 @@ spring:
             - Path=/cart
             - Method=GET
 
+        # Order-Service
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/orders
+            - Method=POST
 
 logging:
   level:

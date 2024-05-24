@@ -10,5 +10,5 @@ import java.util.Map;
 @Getter
 public class RequestAddCart {
     private Long storeId;
-    private Map<Integer, Integer> productQuantityMap;
+    private Map<Long, Integer> productQuantityMap;
 }

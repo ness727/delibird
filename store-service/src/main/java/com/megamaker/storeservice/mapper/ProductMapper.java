@@ -1,12 +1,11 @@
 package com.megamaker.storeservice.mapper;
 
+import com.megamaker.storeservice.dto.category.RequestSaveCategory;
+import com.megamaker.storeservice.dto.category.ResponseCategory;
+import com.megamaker.storeservice.dto.category.ResponseSaveCategory;
 import com.megamaker.storeservice.dto.product.ResponseProduct;
-import com.megamaker.storeservice.dto.store.RequestSaveStore;
-import com.megamaker.storeservice.dto.store.ResponseListStore;
-import com.megamaker.storeservice.dto.store.ResponseSaveStore;
-import com.megamaker.storeservice.dto.store.ResponseStore;
+import com.megamaker.storeservice.entity.Category;
 import com.megamaker.storeservice.entity.Product;
-import com.megamaker.storeservice.entity.Store;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -18,5 +17,4 @@ public interface ProductMapper {
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
     ResponseProduct toResponseProduct(Product product);
-
 }

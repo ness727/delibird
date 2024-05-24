@@ -60,6 +60,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         // 매장 검색 또는 카테고리 선택 시
-        return !request.getServletPath().equals("/stores") && request.getMethod().equals("GET");
+        return (!request.getServletPath().equals("/stores") && request.getMethod().equals("GET"))
+                || request.getServletPath().equals("/products");
     }
 }

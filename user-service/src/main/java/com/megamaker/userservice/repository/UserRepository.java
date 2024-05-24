@@ -1,6 +1,6 @@
 package com.megamaker.userservice.repository;
 
-import com.megamaker.userservice.Entity.User;
+import com.megamaker.userservice.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -32,6 +32,8 @@ public class WebSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
 
+                .cors(AbstractHttpConfigurer::disable)
+
                 // httpBasic 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)
 

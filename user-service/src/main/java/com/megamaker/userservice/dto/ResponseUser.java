@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 public class ResponseUser {
+    private Long id;
     private String userId;
     // private String providerId;
     private String nickname;

@@ -1,4 +1,4 @@
-package com.megamaker.userservice.Entity;
+package com.megamaker.userservice.entity;
 
 import com.megamaker.userservice.dto.RequestUpdateUser;
 import com.megamaker.userservice.vo.Provider;

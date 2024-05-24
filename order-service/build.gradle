@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.5'
 }
 
 group = 'com.megamaker'
@@ -26,37 +26,34 @@ ext {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    // eureka client
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
-    // Data JPA
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    // Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    // Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    // Cloud Config
+    implementation 'org.springframework.cloud:spring-cloud-bus'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     // Bus-Kafka
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
 
-    // Actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // OpenFeign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // MariaDB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // MySQL
     implementation 'com.mysql:mysql-connector-j:8.3.0'
-
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation 'io.jsonwebtoken:jjwt:0.12.3'
@@ -67,10 +64,6 @@ dependencies {
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
-    // 테스트용 h2
-    testImplementation 'com.h2database:h2'
-
-    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
@@ -81,6 +74,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 dependencyManagement {

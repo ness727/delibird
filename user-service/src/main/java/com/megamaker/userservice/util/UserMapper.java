@@ -1,6 +1,6 @@
 package com.megamaker.userservice.util;
 
-import com.megamaker.userservice.Entity.User;
+import com.megamaker.userservice.entity.User;
 import com.megamaker.userservice.dto.RequestRegisterUser;
 import com.megamaker.userservice.dto.ResponseCheckUser;
 import com.megamaker.userservice.dto.ResponseRegisterUser;

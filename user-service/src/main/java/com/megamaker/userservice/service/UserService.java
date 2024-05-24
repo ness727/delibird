@@ -1,6 +1,6 @@
 package com.megamaker.userservice.service;
 
-import com.megamaker.userservice.Entity.User;
+import com.megamaker.userservice.entity.User;
 import com.megamaker.userservice.dto.*;
 import com.megamaker.userservice.repository.UserRepository;
 import com.megamaker.userservice.util.UserMapper;

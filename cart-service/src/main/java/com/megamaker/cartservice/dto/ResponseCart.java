@@ -11,5 +11,5 @@ import java.util.Map;
 public class ResponseCart {
     private String userId;
     private String storeId;
-    private Map<Integer, Integer> productQuantityMap;
+    private Map<Long, Integer> productQuantityMap;
 }

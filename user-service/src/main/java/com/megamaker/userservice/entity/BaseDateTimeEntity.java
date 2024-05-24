@@ -1,4 +1,4 @@
-package com.megamaker.userservice.Entity;
+package com.megamaker.userservice.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

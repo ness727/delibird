@@ -1,4 +1,4 @@
-package com.megamaker.storeservice.dto.product;
+package com.megamaker.orderservice.dto.product;
 
 import lombok.Builder;
 import lombok.Getter;

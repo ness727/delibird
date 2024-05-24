@@ -8,11 +8,6 @@ import com.megamaker.cartservice.util.CartMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 @Service
 @RequiredArgsConstructor
 public class CartService {

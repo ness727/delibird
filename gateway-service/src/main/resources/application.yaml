@@ -105,6 +105,8 @@ spring:
           predicates:
             - Path=/orders
             - Method=POST
+          filters:
+            - AuthorizationCookieFilter
 
 logging:
   level:

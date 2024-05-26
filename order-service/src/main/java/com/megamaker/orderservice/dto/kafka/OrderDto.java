@@ -1,6 +1,7 @@
 package com.megamaker.orderservice.dto.kafka;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 import java.sql.Timestamp;

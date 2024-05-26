@@ -1,6 +1,7 @@
 package com.megamaker.orderservice.util;
 
 import com.megamaker.orderservice.dto.RequestOrder;
+import com.megamaker.orderservice.dto.kafka.OrderDto;
 import com.megamaker.orderservice.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -13,4 +14,6 @@ public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
     Order toOrder(RequestOrder requestOrder);
+
+    OrderDto toOrderDto(RequestOrder requestOrder);
 }

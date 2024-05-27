@@ -2,7 +2,10 @@ package com.megamaker.orderservice.util;
 
 import com.megamaker.orderservice.dto.RequestOrder;
 import com.megamaker.orderservice.dto.OrderDto;
+import com.megamaker.orderservice.dto.ResponseOrder;
+import com.megamaker.orderservice.dto.ResponseOrderProduct;
 import com.megamaker.orderservice.entity.Order;
+import com.megamaker.orderservice.entity.OrderProduct;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -16,4 +19,8 @@ public interface OrderMapper {
     Order toOrder(RequestOrder requestOrder);
 
     OrderDto toOrderDto(RequestOrder requestOrder);
+
+    ResponseOrderProduct toResponseOrderProduct(OrderProduct orderProduct);
+
+    ResponseOrder toResponseOrder(Order order);
 }

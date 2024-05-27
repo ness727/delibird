@@ -108,6 +108,14 @@ spring:
           filters:
             - AuthorizationCookieFilter
 
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/orders
+            - Method=GET
+          filters:
+            - AuthorizationCookieFilter
+
 logging:
   level:
     com.megamaker.gatewayservice: debug

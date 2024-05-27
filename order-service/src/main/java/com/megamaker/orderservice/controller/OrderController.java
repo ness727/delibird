@@ -1,5 +1,6 @@
 package com.megamaker.orderservice.controller;
 
+import com.megamaker.orderservice.dto.ResponseOrder;
 import com.megamaker.orderservice.exception.QuantityException;
 import com.megamaker.orderservice.dto.RequestOrder;
 import com.megamaker.orderservice.service.OrderService;
@@ -11,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @RequestMapping("/orders")
@@ -34,6 +37,18 @@ public class OrderController {
             return ResponseEntity.created(URI.create(environment.getProperty("client.order_result"))).build();
         } catch (QuantityException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("상품 재고를 확인해 주세요");
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getOrder(Authentication authentication) {
+        Long userId = Long.valueOf(String.valueOf(authentication.getPrincipal()));
+
+        try {
+            List<ResponseOrder> result = orderService.getOrder(userId);
+            return ResponseEntity.ok(result);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

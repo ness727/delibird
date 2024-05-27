@@ -55,7 +55,6 @@ public class OrderProductProducer {
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            log.info(jsonToString);
             kafkaTemplate.send(TOPIC_NAME, jsonToString);
         }
     }

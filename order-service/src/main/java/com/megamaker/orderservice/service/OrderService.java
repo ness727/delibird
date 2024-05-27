@@ -2,6 +2,7 @@ package com.megamaker.orderservice.service;
 
 import com.megamaker.orderservice.dto.OrderDto;
 import com.megamaker.orderservice.dto.OrderProductDto;
+import com.megamaker.orderservice.dto.ResponseOrder;
 import com.megamaker.orderservice.exception.QuantityException;
 import com.megamaker.orderservice.dto.RequestOrder;
 import com.megamaker.orderservice.dto.product.ResponseProduct;
@@ -67,6 +68,13 @@ public class OrderService {
 
         orderProductProducer.send(orderProductDtoList);
     }
+
+    public List<ResponseOrder> getOrder(Long userId) {
+        List<Order> foundOrder = orderRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+        return foundOrder.stream().map(OrderMapper.INSTANCE::toResponseOrder).toList();
+    }
+
+    // ---------------
 
     private static int getSum(Map<Long, Integer> productQuantityMap, List<ResponseProduct> productList) {
         int sum = 0;

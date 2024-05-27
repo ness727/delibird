@@ -3,6 +3,9 @@ package com.megamaker.orderservice.repository;
 import com.megamaker.orderservice.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
+import java.util.List;
+import java.util.Optional;
 
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findAllByUserIdOrderByCreatedAtDesc(Long userId);
 }

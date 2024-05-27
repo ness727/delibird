@@ -1,6 +1,7 @@
 package com.megamaker.orderservice.controller;
 
 import com.megamaker.orderservice.dto.ResponseOrder;
+import com.megamaker.orderservice.exception.NoProductException;
 import com.megamaker.orderservice.exception.QuantityException;
 import com.megamaker.orderservice.dto.RequestOrder;
 import com.megamaker.orderservice.service.OrderService;
@@ -27,6 +28,7 @@ public class OrderController {
         Long userId = Long.valueOf(String.valueOf(authentication.getPrincipal()));
         requestOrder.setUserId(userId);
 
+        String error = "";
         try {
             // Order 저장
             Long orderId = orderService.saveOrderJpa(requestOrder);
@@ -36,8 +38,11 @@ public class OrderController {
 
             return ResponseEntity.created(URI.create(environment.getProperty("client.order_result"))).build();
         } catch (QuantityException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("상품 재고를 확인해 주세요");
+            error = "재고 수량보다 적게 주문해주세요";
+        } catch (NoProductException e) {
+            error = "상품 조회에 실패했습니다";
         }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
     @GetMapping

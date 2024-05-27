@@ -45,7 +45,7 @@ public class WebSecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 // JWT로 userId 얻어 저장하는 필터 추가
-                .addFilterAfter(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
 
                 // 세션 비활성화
                 .sessionManagement(session -> session

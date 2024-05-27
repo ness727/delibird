@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "products")
 @Entity
 public class Product extends BaseDateTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +22,8 @@ public class Product extends BaseDateTimeEntity {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }

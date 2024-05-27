@@ -3,6 +3,7 @@ package com.megamaker.orderservice.service;
 import com.megamaker.orderservice.dto.OrderDto;
 import com.megamaker.orderservice.dto.OrderProductDto;
 import com.megamaker.orderservice.dto.ResponseOrder;
+import com.megamaker.orderservice.exception.NoProductException;
 import com.megamaker.orderservice.exception.QuantityException;
 import com.megamaker.orderservice.dto.RequestOrder;
 import com.megamaker.orderservice.dto.product.ResponseProduct;
@@ -38,6 +39,15 @@ public class OrderService {
         // store-service 로 Product 검색
         List<ResponseProduct> productList = getResponseProductList(productQuantityMap);
 
+        // 상품이 없을 때
+        if (productList == null || productList.size() == 0) throw new NoProductException("상품 조회 실패");
+        
+        // 재고가 충분한지 확인
+        for (ResponseProduct dBProduct : productList) {
+            if (dBProduct.getQuantity() < productQuantityMap.get(dBProduct.getId()))
+                throw new QuantityException("재고 부족");
+        }
+        
         // 주문 금액 합계 계산
         int sum = getSum(productQuantityMap, productList);
         order.setSumPrice(sum);

@@ -34,14 +34,14 @@ dependencies {
     // eureka client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-    // Security
+    // Bus-Kafka
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
+
+    // Kafka
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
-
-    // Bus-Kafka
-    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
 
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'

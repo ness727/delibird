@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,10 @@ public class StoreController {
     }
 
     @GetMapping("/{storeId}")
-    public ResponseStore find(@PathVariable Long storeId) {
-        return storeService.find(storeId);
+    public ResponseEntity<?> find(@PathVariable Long storeId) {
+        ResponseStore responseStore = storeService.find(storeId);
+
+        if (responseStore != null) return ResponseEntity.ok(responseStore);
+        else return ResponseEntity.notFound().build();
     }
 }

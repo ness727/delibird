@@ -14,8 +14,8 @@ spring:
         one-indexed-parameters: true
 
   jpa:
-    hibernate:
-      ddl-auto: update
+    # hibernate:
+      # ddl-auto: update
     show-sql: true
 
 logging:

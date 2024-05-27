@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @Table(name = "categories")
 @Entity
-public class Category extends BaseDateTimeEntity {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -111,7 +111,7 @@ spring:
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
-            - Path=/orders
+            - Path=/orders, /reviews/**
             - Method=GET
           filters:
             - AuthorizationCookieFilter

@@ -29,6 +29,7 @@ public class Store extends BaseDateTimeEntity {
     @Column(name = "road_address")
     private String roadAddress;  // 도로명 주소
 
+    @Column(name = "logo_image")
     private String logoImage;
     private String image1;
     private String image2;

@@ -1,18 +1,14 @@
-package com.megamaker.orderservice.dto.kafka;
+package com.megamaker.orderservice.dto.kafka.order;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
-import lombok.ToString;
-
-import java.sql.Timestamp;
 
 @Getter
 @Builder
-public class Payload {
+public class OrderPayload {
     private Long user_id;
     private Long store_id;
     private Long coupon_id;
-    private int sum_price;
+    private Integer sum_price;
     private String request;
 }

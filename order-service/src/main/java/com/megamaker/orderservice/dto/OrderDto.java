@@ -1,4 +1,4 @@
-package com.megamaker.orderservice.dto.kafka;
+package com.megamaker.orderservice.dto;
 
 import lombok.Builder;
 import lombok.Data;

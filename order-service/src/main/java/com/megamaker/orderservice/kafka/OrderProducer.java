@@ -2,17 +2,18 @@ package com.megamaker.orderservice.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.megamaker.orderservice.dto.kafka.*;
-import com.megamaker.orderservice.entity.Order;
+import com.megamaker.orderservice.dto.kafka.Field;
+import com.megamaker.orderservice.dto.kafka.order.KafkaOrderDto;
+import com.megamaker.orderservice.dto.kafka.order.OrderPayload;
+import com.megamaker.orderservice.dto.kafka.Schema;
+import com.megamaker.orderservice.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 
 @Slf4j
@@ -20,6 +21,7 @@ import java.util.Optional;
 @Service
 public class OrderProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
+    private final static String TOPIC_NAME = "orders";
 
     List<Field> fields = Arrays.asList(
             new Field("int64", false, "user_id"),
@@ -36,8 +38,8 @@ public class OrderProducer {
             .name("orders")
             .build();
 
-    public void send(String topic, OrderDto orderDto) {
-        Payload payload = Payload.builder()
+    public void send(OrderDto orderDto) {
+        OrderPayload payload = OrderPayload.builder()
                 .user_id(orderDto.getUserId())
                 .store_id(orderDto.getStoreId())
                 .coupon_id(orderDto.getCouponId())
@@ -55,8 +57,6 @@ public class OrderProducer {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        log.debug(jsonToString);
-        kafkaTemplate.send(topic, jsonToString);
-        log.info("Order Producer sent data from the Order microservice: {}", kafkaOrderDto);
+        kafkaTemplate.send(TOPIC_NAME, jsonToString);
     }
 }

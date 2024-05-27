@@ -1,10 +1,9 @@
 package com.megamaker.orderservice.dto.kafka;
 
+import com.megamaker.orderservice.dto.kafka.Field;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Getter

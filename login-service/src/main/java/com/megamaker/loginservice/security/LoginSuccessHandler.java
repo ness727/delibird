@@ -24,6 +24,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.security.Key;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 
@@ -54,10 +55,13 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     }
 
     private ResponseCookie makeCookie(String name, String token) {
+        Duration duration = Duration.ofMillis(Long.parseLong(environment.getProperty("token.expiration_time")));
+
         return ResponseCookie.from(name, token)
                 .domain(environment.getProperty("cookie.domain"))
                 .path("/")
                 .httpOnly(true)
+                .maxAge(duration.getSeconds())
                 .build();
     }
 }

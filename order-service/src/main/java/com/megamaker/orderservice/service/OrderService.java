@@ -1,22 +1,25 @@
 package com.megamaker.orderservice.service;
 
-import com.megamaker.orderservice.dto.kafka.OrderDto;
-import com.megamaker.orderservice.entity.OrderProduct;
+import com.megamaker.orderservice.dto.OrderDto;
+import com.megamaker.orderservice.dto.OrderProductDto;
 import com.megamaker.orderservice.exception.QuantityException;
 import com.megamaker.orderservice.dto.RequestOrder;
 import com.megamaker.orderservice.dto.product.ResponseProduct;
 import com.megamaker.orderservice.entity.Order;
 import com.megamaker.orderservice.feignclient.StoreClient;
 import com.megamaker.orderservice.kafka.OrderProducer;
+import com.megamaker.orderservice.kafka.OrderProductProducer;
 import com.megamaker.orderservice.repository.OrderRepository;
 import com.megamaker.orderservice.util.OrderMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -24,10 +27,10 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final StoreClient storeClient;
     private final OrderProducer orderProducer;
-
+    private final OrderProductProducer orderProductProducer;
 
     // JPA로 주문 저장
-    public void saveOrder(RequestOrder requestOrder) {
+    public Long saveOrderJpa(RequestOrder requestOrder) {
         Map<Long, Integer> productQuantityMap = requestOrder.getProductQuantityMap();
         Order order = OrderMapper.INSTANCE.toOrder(requestOrder);
 
@@ -38,7 +41,7 @@ public class OrderService {
         int sum = getSum(productQuantityMap, productList);
         order.setSumPrice(sum);
 
-        orderRepository.save(order);
+        return orderRepository.save(order).getId();
     }
 
     // Kafka Connect로 주문 저장
@@ -53,7 +56,16 @@ public class OrderService {
         int sum = getSum(productQuantityMap, productList);
         orderDto.setSumPrice(sum);
 
-        orderProducer.send("orders", orderDto);
+        orderProducer.send(orderDto);
+    }
+
+    public void saveOrderProductKafka(Long orderId, RequestOrder requestOrder) {
+        Map<Long, Integer> productQuantityMap = requestOrder.getProductQuantityMap();
+        List<OrderProductDto> orderProductDtoList = productQuantityMap.keySet().stream()
+                .map(productId -> new OrderProductDto(orderId, productId, productQuantityMap.get(productId)))
+                .toList();
+
+        orderProductProducer.send(orderProductDtoList);
     }
 
     private static int getSum(Map<Long, Integer> productQuantityMap, List<ResponseProduct> productList) {

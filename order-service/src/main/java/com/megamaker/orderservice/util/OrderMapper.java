@@ -1,7 +1,7 @@
 package com.megamaker.orderservice.util;
 
 import com.megamaker.orderservice.dto.RequestOrder;
-import com.megamaker.orderservice.dto.kafka.OrderDto;
+import com.megamaker.orderservice.dto.OrderDto;
 import com.megamaker.orderservice.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

@@ -25,8 +25,12 @@ public class OrderController {
         requestOrder.setUserId(userId);
 
         try {
-            //orderService.saveOrder(requestOrder);
-            orderService.saveOrderKafka(requestOrder);
+            // Order 저장
+            Long orderId = orderService.saveOrderJpa(requestOrder);
+
+            // OrderProduct 저장
+            orderService.saveOrderProductKafka(orderId, requestOrder);
+
             return ResponseEntity.created(URI.create(environment.getProperty("client.order_result"))).build();
         } catch (QuantityException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("상품 재고를 확인해 주세요");

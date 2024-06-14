@@ -18,24 +18,23 @@ import org.springframework.context.annotation.Import;
 
 import static org.assertj.core.api.Assertions.*;
 
-
-@DataJpaTest
-@Import(StoreRepositoryImpl.class)
+@SpringBootTest
+//@DataJpaTest
+//@Import(StoreRepositoryImpl.class)
 class StoreServiceImplTest {
-    private final StoreService storeService;
-    private final CategoryService categoryService;
-    private final StoreRepository storeRepository;
-    private final CategoryRepository categoryRepository;
-    private final StoreMapper storeMapper;
+    @Autowired StoreService storeService;
+    @Autowired CategoryService categoryService;
+    @Autowired StoreRepository storeRepository;
+    @Autowired CategoryRepository categoryRepository;
 
-    @Autowired
-    public StoreServiceImplTest(StoreRepository storeRepository, CategoryRepository categoryRepository, StoreMapper storeMapper) {
-        this.storeRepository = storeRepository;
-        this.categoryRepository = categoryRepository;
-        this.storeMapper = storeMapper;
-        this.storeService = new StoreServiceImpl(storeRepository, categoryRepository, storeMapper);
-        this.categoryService = new CategoryServiceImpl(categoryRepository);
-    }
+//    @Autowired
+//    public StoreServiceImplTest(StoreRepository storeRepository, CategoryRepository categoryRepository, StoreMapper storeMapper) {
+//        this.storeRepository = storeRepository;
+//        this.categoryRepository = categoryRepository;
+//        this.storeMapper = storeMapper;
+//        this.storeService = new StoreServiceImpl(storeRepository, categoryRepository, storeMapper);
+//        this.categoryService = new CategoryServiceImpl(categoryRepository);
+//    }
 
     @Test
     public void 매장_저장에_성공한다() {

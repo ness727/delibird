@@ -8,8 +8,8 @@ import lombok.Getter;
 public class ResponseReview {
     private String review;
     private Byte rating;
-    private String image1;
-    private String image2;
-    private String image3;
-    private String created_At;
+//    private String image1;
+//    private String image2;
+//    private String image3;
+    private String createdAt;
 }

@@ -13,7 +13,9 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://localhost:3000"  # 개발용
+            allowedOrigins:
+              - "http://localhost:3000"  # 개발용
+              - "http://delibird.store"
             allow-credentials: true
             allowedHeaders: "*"
             allowedMethods:

@@ -55,6 +55,7 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0' // v1.18.16+ 부터
 
     // MapStruct
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'

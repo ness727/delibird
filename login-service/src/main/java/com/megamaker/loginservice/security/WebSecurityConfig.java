@@ -40,6 +40,9 @@ public class WebSecurityConfig {
                 // CSRF 테스트를 위한 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
 
+                // Gateway에 위임
+                .cors(AbstractHttpConfigurer::disable)
+
                 // httpBasic 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)
 

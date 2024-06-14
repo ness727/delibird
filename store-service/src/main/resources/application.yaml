@@ -22,7 +22,6 @@ logging:
   level:
     com.megamaker.storeservice: debug
 
-management:
   endpoints:
     web:
       exposure:

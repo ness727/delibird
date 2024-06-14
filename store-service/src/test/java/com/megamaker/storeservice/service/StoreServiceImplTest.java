@@ -6,6 +6,7 @@ import com.megamaker.storeservice.dto.store.RequestSaveStore;
 import com.megamaker.storeservice.dto.store.ResponseSaveStore;
 import com.megamaker.storeservice.entity.Category;
 import com.megamaker.storeservice.entity.Store;
+import com.megamaker.storeservice.mapper.StoreMapper;
 import com.megamaker.storeservice.repository.CategoryRepository;
 import com.megamaker.storeservice.repository.StoreRepository;
 import com.megamaker.storeservice.repository.StoreRepositoryImpl;
@@ -25,12 +26,14 @@ class StoreServiceImplTest {
     private final CategoryService categoryService;
     private final StoreRepository storeRepository;
     private final CategoryRepository categoryRepository;
+    private final StoreMapper storeMapper;
 
     @Autowired
-    public StoreServiceImplTest(StoreRepository storeRepository, CategoryRepository categoryRepository) {
+    public StoreServiceImplTest(StoreRepository storeRepository, CategoryRepository categoryRepository, StoreMapper storeMapper) {
         this.storeRepository = storeRepository;
         this.categoryRepository = categoryRepository;
-        this.storeService = new StoreServiceImpl(storeRepository, categoryRepository);
+        this.storeMapper = storeMapper;
+        this.storeService = new StoreServiceImpl(storeRepository, categoryRepository, storeMapper);
         this.categoryService = new CategoryServiceImpl(categoryRepository);
     }
 

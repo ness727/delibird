@@ -13,10 +13,11 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     @Override
     public List<ResponseProduct> getProductList(List<Long> productIdList) {
         List<Product> foundProductList = productRepository.findByIdIn(productIdList);
-        return foundProductList.stream().map(ProductMapper.INSTANCE::toResponseProduct).toList();
+        return foundProductList.stream().map(productMapper::toResponseProduct).toList();
     }
 }

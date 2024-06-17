@@ -13,6 +13,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -37,9 +38,18 @@ public class AuthorizationCookieFilter extends AbstractGatewayFilterFactory<Auth
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             MultiValueMap<String, HttpCookie> cookies = request.getCookies();
-            if (cookies.containsKey("Auth")) {
-                String jwt = cookies.getFirst("Auth").getValue();
 
+            String jwt = "";
+            if (request.getHeaders().containsKey("Auth")) {
+                log.debug("헤더");
+                jwt = request.getHeaders().getFirst("Auth");
+            } else if (cookies.containsKey("Auth")) {
+                jwt = cookies.getFirst("Auth").getValue();
+            }
+            log.debug(jwt);
+
+            // 헤더나 쿠키에 Auth가 포함되어 있을 때
+            if (StringUtils.hasText(jwt)) {
                 if (!isJwtValid(jwt)) {
                     log.debug("토큰이 유효하지 않음");
                     return onError(exchange, "Token is not valid", HttpStatus.UNAUTHORIZED);

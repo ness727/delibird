@@ -31,8 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String headerToken = request.getHeader("Auth");
         if (headerToken != null) {
             jwt = headerToken;
-        }
-        else {  // 쿠키에서 JWT 가져옴
+        } else {  // 쿠키에서 JWT 가져옴
             for (Cookie cookie : request.getCookies()) {
                 if (cookie.getName().equals("Auth")) {
                     jwt = cookie.getValue();

@@ -33,10 +33,16 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String jwt = null;
-        // 쿠키에서 JWT 가져옴
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("Auth")) {
-                jwt = cookie.getValue();
+
+        // 헤더에서 JWT 가져옴 보냈을 때
+        String headerToken = request.getHeader("Auth");
+        if (headerToken != null) {
+            jwt = headerToken;
+        } else {  // 쿠키에서 JWT 가져옴
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("Auth")) {
+                    jwt = cookie.getValue();
+                }
             }
         }
 

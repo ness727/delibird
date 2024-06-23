@@ -1,12 +1,19 @@
 server:
   port: 8000
+#  ssl:
+#    enabled: true
+#    key-alias: tomcat
+#    key-store: classpath:keystore.p12
+#    key-store-type: PKCS12
 
 spring:
   application:
     name: gateway-service
 
   config:
-    import: classpath:/bootstrap.yaml
+    import:
+      - classpath:/bootstrap.yaml
+#      - classpath:/secret.yaml
 
   cloud:
     gateway:
@@ -15,7 +22,7 @@ spring:
           '[/**]':
             allowedOrigins:
               - "http://localhost:3000"  # 개발용
-              - "http://delibird.store"
+              - "https://delibird.store"
             allow-credentials: true
             allowedHeaders: "*"
             allowedMethods:

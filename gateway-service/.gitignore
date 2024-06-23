@@ -36,3 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 /src/main/resources/secrets.yaml
+/src/main/resources/keystore.p12
+/src/main/resources/secret.yaml

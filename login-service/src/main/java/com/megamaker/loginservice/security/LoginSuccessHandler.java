@@ -61,6 +61,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                 .domain(environment.getProperty("cookie.domain"))
                 .path("/")
                 .httpOnly(true)
+                .sameSite("None")
+                .secure(true)
                 .maxAge(duration.getSeconds())
                 .build();
     }

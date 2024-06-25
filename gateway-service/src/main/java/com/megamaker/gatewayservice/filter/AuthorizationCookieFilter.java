@@ -37,13 +37,15 @@ public class AuthorizationCookieFilter extends AbstractGatewayFilterFactory<Auth
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
+            String authHeader = request.getHeaders().getFirst("Auth");
             MultiValueMap<String, HttpCookie> cookies = request.getCookies();
 
             String jwt = "";
-            if (request.getHeaders().containsKey("Auth")) {
+            if (StringUtils.hasText(authHeader)) {
                 log.debug("헤더");
-                jwt = request.getHeaders().getFirst("Auth");
-            } else if (cookies.containsKey("Auth")) {
+                jwt = authHeader;
+            }
+            if (cookies.containsKey("Auth")) {
                 jwt = cookies.getFirst("Auth").getValue();
             }
             log.debug(jwt);

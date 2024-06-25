@@ -27,11 +27,16 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String jwt = null;
 
-        // 헤더에서 JWT 가져옴 보냈을 때
+        // 헤더에서 JWT 가져옴
+        // 주로 다른 서비스에서 feign 요청을 보냈을 때
         String headerToken = request.getHeader("Auth");
         if (headerToken != null) {
             jwt = headerToken;
-        } else {  // 쿠키에서 JWT 가져옴
+        }
+
+        // 쿠키에서 JWT 가져옴
+        // 주로 게이트웨이 -> 바로 이 서비스로 요청 전달 시
+        if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 if (cookie.getName().equals("Auth")) {
                     jwt = cookie.getValue();
@@ -52,6 +57,7 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (RuntimeException e) {
             log.debug("인증 정보 불일치");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
         doFilter(request, response, filterChain);
     }

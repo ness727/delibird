@@ -38,9 +38,6 @@ public class WebSecurityConfig {
 
                 .cors(AbstractHttpConfigurer::disable)
 
-                // httpBasic 비활성화
-                .httpBasic(AbstractHttpConfigurer::disable)
-
                 // formLogin 비활성화
                 .formLogin(FormLoginConfigurer::disable)
 

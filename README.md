@@ -24,6 +24,10 @@ encrypt:<br/>
 
 <br/>
 
-설정 파일 위치<br/>
+Frontend Config Repository<br/>
+--------
+https://github.com/cikooko/delibird-front.git
+
+Backend Config Repository<br/>
 --------
 https://github.com/ness727/delibird-config

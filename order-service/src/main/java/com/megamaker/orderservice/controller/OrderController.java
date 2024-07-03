@@ -30,12 +30,7 @@ public class OrderController {
 
         String error = "";
         try {
-            // Order 저장
-            Long orderId = orderService.saveOrderJpa(requestOrder);
-
-            // OrderProduct 저장
-            orderService.saveOrderProductKafka(orderId, requestOrder);
-
+            orderService.save(requestOrder);
             return ResponseEntity.created(URI.create(environment.getProperty("client.order_result"))).build();
         } catch (QuantityException e) {
             error = "재고 수량보다 적게 주문해주세요";
@@ -50,7 +45,7 @@ public class OrderController {
         Long userId = Long.valueOf(String.valueOf(authentication.getPrincipal()));
 
         try {
-            List<ResponseOrder> result = orderService.getOrder(userId);
+            List<ResponseOrder> result = orderService.getOrderList(userId);
             return ResponseEntity.ok(result);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();

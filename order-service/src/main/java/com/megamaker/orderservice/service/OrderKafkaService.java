@@ -49,8 +49,8 @@ public class OrderKafkaService implements OrderService {
         if (productList == null || productList.size() == 0) throw new NoProductException("상품 조회 실패");
 
         // 재고가 충분한지 확인
-        for (ResponseProduct dBProduct : productList) {
-            if (dBProduct.getQuantity() < productQuantityMap.get(dBProduct.getId()))
+        for (ResponseProduct dbProduct : productList) {
+            if (dbProduct.getQuantity() < productQuantityMap.get(dbProduct.getId()))
                 throw new QuantityException("재고 부족");
         }
 
@@ -91,23 +91,7 @@ public class OrderKafkaService implements OrderService {
         return foundOrder.stream().map(OrderMapper.INSTANCE::toResponseOrder).toList();
     }
 
-    // ---------------
-
-    private static int getSum(Map<Long, Integer> productQuantityMap, List<ResponseProduct> productList) {
-        int sum = 0;
-        for (ResponseProduct product : productList) {
-            int orderQty = productQuantityMap.get(product.getId());
-
-            // 재고 보다 주문수량이 많을 때
-            if (product.getQuantity() < orderQty) {
-                throw new QuantityException("재고 부족");
-            }
-
-            sum += product.getPrice() * orderQty;
-        }
-        return sum;
-    }
-
+    // store-service로 상품 정보 조회 요청
     private List<ResponseProduct> getResponseProductList(Map<Long, Integer> productQuantityMap) {
         // store-service 로 Product 검색
         List<Long> productIdList = productQuantityMap.keySet().stream().toList();

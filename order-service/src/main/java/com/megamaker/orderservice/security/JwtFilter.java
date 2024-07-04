@@ -56,7 +56,7 @@ public class JwtFilter extends OncePerRequestFilter {
             // 새 유저 인증 객체 생성
             Authentication auth = new UsernamePasswordAuthenticationToken(
                     foundUser.getId(),
-                    null,
+                    jwt,
                     null
             );
             SecurityContextHolder.getContext().setAuthentication(auth);

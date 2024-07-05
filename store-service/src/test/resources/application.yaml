@@ -6,18 +6,11 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
-  config:
-    import:
-      - optional:configserver:http://localhost:8888
-
-  cloud:
-    config:
-      name: delibird, database
-
-  profiles:
-    active: dev
+#  config:
+#    import:
+#      - optional:configserver:http://localhost:8888
 
 logging:
   level:

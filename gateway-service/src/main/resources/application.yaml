@@ -93,6 +93,14 @@ spring:
         - id: store-service
           uri: lb://STORE-SERVICE
           predicates:
+            - Path=/products/**
+            - Method=POST
+          filters:
+            - AuthorizationCookieFilter
+
+        - id: store-service
+          uri: lb://STORE-SERVICE
+          predicates:
             - Path=/stores, /stores/**
             - Method=GET
           filters:

@@ -24,7 +24,7 @@ encrypt:<br/>
 
 <br/>
 
-Frontend Config Repository<br/>
+Frontend Repository<br/>
 --------
 https://github.com/cikooko/delibird-front
 
